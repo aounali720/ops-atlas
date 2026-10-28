@@ -1,0 +1,17 @@
+# Example only: this file is outside .github/workflows/ and is not executed by GitHub.
+name: Read-only validation example
+on:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      # Pin to trusted full commit SHAs when applying a hardened enterprise policy.
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-audit --no-fund
+      - run: npm run typecheck && npm test && npm run build

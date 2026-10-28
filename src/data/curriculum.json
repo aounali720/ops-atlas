@@ -1,0 +1,2215 @@
+{
+  "version": 1,
+  "worlds": [
+    {
+      "id": "git",
+      "number": "01",
+      "title": "Git Foundations",
+      "place": "The Source Caverns",
+      "icon": "git-branch",
+      "difficulty": "Beginner",
+      "accent": "#818CF8",
+      "source": "https://git-scm.com/book/en/v2",
+      "description": "Learn the version-control mental model, then make safe changes with confidence."
+    },
+    {
+      "id": "github",
+      "number": "02",
+      "title": "GitHub Collaboration",
+      "place": "The Collaboration City",
+      "icon": "git-pull-request",
+      "difficulty": "Beginner",
+      "accent": "#38BDF8",
+      "source": "https://docs.github.com/en/get-started",
+      "description": "Turn local commits into teamwork: remotes, reviews, and automated checks."
+    },
+    {
+      "id": "docker",
+      "number": "03",
+      "title": "Docker Essentials",
+      "place": "The Container Docks",
+      "icon": "container",
+      "difficulty": "Intermediate",
+      "accent": "#34D399",
+      "source": "https://docs.docker.com/get-started/",
+      "description": "Move from images and containers to persistent, networked workloads."
+    },
+    {
+      "id": "engineering",
+      "number": "04",
+      "title": "Container Engineering",
+      "place": "The Build Factory",
+      "icon": "boxes",
+      "difficulty": "Intermediate",
+      "accent": "#FBBF24",
+      "source": "https://docs.docker.com/build/",
+      "description": "Build small, secure, reproducible, observable container applications."
+    },
+    {
+      "id": "kubernetes",
+      "number": "05",
+      "title": "Kubernetes Operations",
+      "place": "The Cluster Frontier",
+      "icon": "network",
+      "difficulty": "Intermediate",
+      "accent": "#A78BFA",
+      "source": "https://kubernetes.io/docs/tutorials/kubernetes-basics/",
+      "description": "Operate, scale, expose, and debug containerized workloads."
+    },
+    {
+      "id": "cloud",
+      "number": "06",
+      "title": "Cloud Fundamentals",
+      "place": "The Cloud Atlas",
+      "icon": "cloud",
+      "difficulty": "Intermediate",
+      "accent": "#FB7185",
+      "source": "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-cloud-concepts/",
+      "description": "Choose the right cloud primitives and understand the tradeoffs."
+    },
+    {
+      "id": "platform",
+      "number": "07",
+      "title": "Cloud Platform Engineering",
+      "place": "The Infrastructure Forge",
+      "icon": "server",
+      "difficulty": "Advanced",
+      "accent": "#22D3EE",
+      "source": "https://docs.aws.amazon.com/",
+      "description": "Automate deployments, permissions, monitoring, and cost controls."
+    },
+    {
+      "id": "security",
+      "number": "08",
+      "title": "Production & Security",
+      "place": "The Final Citadel",
+      "icon": "shield-check",
+      "difficulty": "Advanced",
+      "accent": "#F472B6",
+      "source": "https://docs.docker.com/security/",
+      "description": "Protect the software supply chain and handle realistic production incidents."
+    }
+  ],
+  "lessons": [
+    {
+      "id": "git-1",
+      "world": "git",
+      "number": 1,
+      "title": "Why version control matters",
+      "summary": "Track your project as snapshots rather than losing work in folders named final-v7. A commit records a version of a tracked tree with a message and parent history.",
+      "example": "git --version",
+      "lab": {
+        "prompt": "Confirm that Git is installed by requesting its version.",
+        "answer": "git --version",
+        "hint": "Run the version flag on git."
+      },
+      "concepts": [
+        {
+          "term": "Repository",
+          "definition": "A project directory containing Git metadata and a history of tracked snapshots."
+        },
+        {
+          "term": "Commit",
+          "definition": "A recorded snapshot of tracked content, its message, parent(s), and metadata."
+        },
+        {
+          "term": "Working tree",
+          "definition": "The actual checked-out files you edit before staging or committing."
+        }
+      ],
+      "scenario": {
+        "question": "You want to experiment without losing yesterday’s working code. What should you use?",
+        "options": [
+          "A new Git branch",
+          "A new cloud region",
+          "A Docker volume",
+          "An extra SSH key"
+        ],
+        "correct": 0,
+        "explanation": "Branches let experiments diverge without rewriting a stable line of work."
+      },
+      "tip": "A commit is not a backup of every untracked file; only content that was added to the history is retained.",
+      "order": 1,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://git-scm.com/book/en/v2"
+      ],
+      "objective": "Explain repository and apply it in a practical workflow.",
+      "takeaways": [
+        "Repository: A project directory containing Git metadata and a history of tracked snapshots.",
+        "Commit: A recorded snapshot of tracked content, its message, parent(s), and metadata.",
+        "Working tree: The actual checked-out files you edit before staging or committing."
+      ],
+      "questStory": "Mission 01: Your team needs you to apply why version control matters safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "git-2",
+      "world": "git",
+      "number": 2,
+      "title": "Initialize and inspect",
+      "summary": "A repository starts with git init. Status is your dashboard: it distinguishes tracked, changed, staged, and untracked files.",
+      "example": "git init\ngit status",
+      "lab": {
+        "prompt": "Initialize a repository in an empty practice directory.",
+        "answer": "git init",
+        "hint": "The command ends in init."
+      },
+      "concepts": [
+        {
+          "term": "git init",
+          "definition": "Creates Git metadata in the current directory; it does not publish anything online."
+        },
+        {
+          "term": "git status",
+          "definition": "Reports branch, staged changes, unstaged changes, and untracked files."
+        },
+        {
+          "term": "Untracked file",
+          "definition": "A file Git sees but has never been added for tracking."
+        }
+      ],
+      "scenario": {
+        "question": "After creating notes.md, git status calls it untracked. Why?",
+        "options": [
+          "The file is already committed",
+          "Git has not been told to track it",
+          "GitHub rejected it",
+          "Docker owns the file"
+        ],
+        "correct": 1,
+        "explanation": "Files stay untracked until explicitly added, unless ignored."
+      },
+      "tip": "Run commands in a disposable folder; do not initialize inside an unrelated project.",
+      "order": 2,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://git-scm.com/book/en/v2"
+      ],
+      "objective": "Explain git init and apply it in a practical workflow.",
+      "takeaways": [
+        "git init: Creates Git metadata in the current directory; it does not publish anything online.",
+        "git status: Reports branch, staged changes, unstaged changes, and untracked files.",
+        "Untracked file: A file Git sees but has never been added for tracking."
+      ],
+      "questStory": "Mission 02: Your team needs you to apply initialize and inspect safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "git-3",
+      "world": "git",
+      "number": 3,
+      "title": "Stage and commit changes",
+      "summary": "The index (staging area) lets you choose the exact version that goes into the next commit. Stage deliberately; commit with an informative message.",
+      "example": "git add README.md\ngit commit -m \"Document setup\"",
+      "lab": {
+        "prompt": "Stage only README.md, leaving other files untouched.",
+        "answer": "git add README.md",
+        "hint": "Use git add followed by the filename."
+      },
+      "concepts": [
+        {
+          "term": "Staging area",
+          "definition": "The index: the proposed content of the next commit, separate from your working tree."
+        },
+        {
+          "term": "git add",
+          "definition": "Copies the current version of selected paths into the index."
+        },
+        {
+          "term": "git commit",
+          "definition": "Records the staged snapshot as a new history entry."
+        }
+      ],
+      "scenario": {
+        "question": "You changed two files but only want to commit one. What do you do?",
+        "options": [
+          "git add .",
+          "git add path/to/one-file",
+          "git reset --hard",
+          "git push --force"
+        ],
+        "correct": 1,
+        "explanation": "Staging a path limits what goes into the next commit."
+      },
+      "tip": "A commit records staged content, not automatically every last working-tree edit.",
+      "order": 3,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://git-scm.com/book/en/v2"
+      ],
+      "objective": "Explain staging area and apply it in a practical workflow.",
+      "takeaways": [
+        "Staging area: The index: the proposed content of the next commit, separate from your working tree.",
+        "git add: Copies the current version of selected paths into the index.",
+        "git commit: Records the staged snapshot as a new history entry."
+      ],
+      "questStory": "Mission 03: Your team needs you to apply stage and commit changes safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "git-4",
+      "world": "git",
+      "number": 4,
+      "title": "Read history and diffs",
+      "summary": "Read the past before rewriting it. git log shows commits, git diff compares changes; --staged shows what is queued for the next commit.",
+      "example": "git log --oneline\ngit diff --staged",
+      "lab": {
+        "prompt": "Inspect staged changes before committing.",
+        "answer": "git diff --staged",
+        "hint": "Use git diff with a long flag describing the index."
+      },
+      "concepts": [
+        {
+          "term": "git log",
+          "definition": "Displays commit history and metadata, optionally condensed with --oneline."
+        },
+        {
+          "term": "git diff",
+          "definition": "Shows line-level differences; plain form normally compares working tree to index."
+        },
+        {
+          "term": "--staged",
+          "definition": "Makes git diff compare the staging area with the current HEAD commit."
+        }
+      ],
+      "scenario": {
+        "question": "Which command reviews what your next commit will contain?",
+        "options": [
+          "git diff --staged",
+          "git status --short only",
+          "git clone",
+          "git tag -l"
+        ],
+        "correct": 0,
+        "explanation": "Staged diff shows patch content rather than just filenames."
+      },
+      "tip": "Always review a diff before committing credentials or generated files.",
+      "order": 4,
+      "xp": 100,
+      "minutes": 15,
+      "isBoss": false,
+      "sources": [
+        "https://git-scm.com/book/en/v2"
+      ],
+      "objective": "Explain git log and apply it in a practical workflow.",
+      "takeaways": [
+        "git log: Displays commit history and metadata, optionally condensed with --oneline.",
+        "git diff: Shows line-level differences; plain form normally compares working tree to index.",
+        "--staged: Makes git diff compare the staging area with the current HEAD commit."
+      ],
+      "questStory": "Mission 04: Your team needs you to apply read history and diffs safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "git-5",
+      "world": "git",
+      "number": 5,
+      "title": "Branches, merges, and recovery",
+      "summary": "Branches are pointers to commits. Create an isolated feature branch, merge reviewed changes, and prefer revert when undoing already-shared history.",
+      "example": "git switch -c feature/login\ngit switch main\ngit merge feature/login",
+      "lab": {
+        "prompt": "Create a new branch called feature/login and switch to it.",
+        "answer": "git switch -c feature/login",
+        "hint": "Use switch with -c and a feature branch name."
+      },
+      "concepts": [
+        {
+          "term": "Branch",
+          "definition": "A movable reference to a commit that gives a line of work a name."
+        },
+        {
+          "term": "Merge",
+          "definition": "Integrates another branch’s changes, possibly creating a merge commit."
+        },
+        {
+          "term": "git revert",
+          "definition": "Creates a new commit that inverses an earlier commit without deleting published history."
+        }
+      ],
+      "scenario": {
+        "question": "You must undo a bad commit already pulled by teammates. What is the safest default?",
+        "options": [
+          "git reset --hard HEAD~1",
+          "git revert <commit>",
+          "Delete the repository",
+          "Force-push main"
+        ],
+        "correct": 1,
+        "explanation": "Revert preserves shared history and adds a compensating commit."
+      },
+      "tip": "Never casually force-push a shared branch; coordinate when history rewriting is truly necessary.",
+      "order": 5,
+      "xp": 180,
+      "minutes": 15,
+      "isBoss": true,
+      "sources": [
+        "https://git-scm.com/book/en/v2"
+      ],
+      "objective": "Explain branch and apply it in a practical workflow.",
+      "takeaways": [
+        "Branch: A movable reference to a commit that gives a line of work a name.",
+        "Merge: Integrates another branch’s changes, possibly creating a merge commit.",
+        "git revert: Creates a new commit that inverses an earlier commit without deleting published history."
+      ],
+      "questStory": "Mission 05: Your team needs you to apply branches, merges, and recovery safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "github-1",
+      "world": "github",
+      "number": 1,
+      "title": "Remote repositories",
+      "summary": "Git lives locally; GitHub hosts collaboration. A remote is a named URL, and push/pull exchange reachable commits and refs.",
+      "example": "git remote -v\ngit remote add origin https://github.com/USER/REPO.git",
+      "lab": {
+        "prompt": "List the remotes configured for your repository.",
+        "answer": "git remote -v",
+        "hint": "Show configured remotes verbosely."
+      },
+      "concepts": [
+        {
+          "term": "Remote",
+          "definition": "A named address for another Git repository, commonly origin."
+        },
+        {
+          "term": "git push",
+          "definition": "Uploads local commits/refs to a remote when permissions and history allow."
+        },
+        {
+          "term": "git fetch",
+          "definition": "Downloads remote refs and objects without automatically merging them."
+        }
+      ],
+      "scenario": {
+        "question": "You want new remote commits but not an automatic merge. Choose:",
+        "options": [
+          "git fetch",
+          "git pull",
+          "git commit",
+          "git clean -fd"
+        ],
+        "correct": 0,
+        "explanation": "Fetch updates remote-tracking refs; pull additionally integrates."
+      },
+      "tip": "Never paste private access tokens into a remote URL stored in a public screenshot.",
+      "order": 6,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.github.com/en/get-started"
+      ],
+      "objective": "Explain remote and apply it in a practical workflow.",
+      "takeaways": [
+        "Remote: A named address for another Git repository, commonly origin.",
+        "git push: Uploads local commits/refs to a remote when permissions and history allow.",
+        "git fetch: Downloads remote refs and objects without automatically merging them."
+      ],
+      "questStory": "Mission 06: Your team needs you to apply remote repositories safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "github-2",
+      "world": "github",
+      "number": 2,
+      "title": "Pull requests and reviews",
+      "summary": "A pull request proposes changes from a head branch into a base branch. Use a clear description, review the diff, and wait for required checks.",
+      "example": "git push -u origin feature/login",
+      "lab": {
+        "prompt": "Publish your local feature branch and set its upstream.",
+        "answer": "git push -u origin feature/login",
+        "hint": "Use git push with -u to remember the upstream."
+      },
+      "concepts": [
+        {
+          "term": "Pull request",
+          "definition": "A discussion and review workflow for integrating branch changes."
+        },
+        {
+          "term": "Base branch",
+          "definition": "The destination branch into which a PR proposes changes."
+        },
+        {
+          "term": "Review",
+          "definition": "Human feedback, approval, or change requests on proposed code."
+        }
+      ],
+      "scenario": {
+        "question": "A check fails on your PR. What should you do before merging?",
+        "options": [
+          "Ignore the failure",
+          "Fix and re-run the check",
+          "Force-push main",
+          "Delete the workflow"
+        ],
+        "correct": 1,
+        "explanation": "A failed required check can indicate broken tests or unsafe changes."
+      },
+      "tip": "Reviewers should understand what changed, why, and how it was tested.",
+      "order": 7,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.github.com/en/get-started"
+      ],
+      "objective": "Explain pull request and apply it in a practical workflow.",
+      "takeaways": [
+        "Pull request: A discussion and review workflow for integrating branch changes.",
+        "Base branch: The destination branch into which a PR proposes changes.",
+        "Review: Human feedback, approval, or change requests on proposed code."
+      ],
+      "questStory": "Mission 07: Your team needs you to apply pull requests and reviews safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "github-3",
+      "world": "github",
+      "number": 3,
+      "title": "Forks, issues, and contributions",
+      "summary": "Use issues to record scoped work and forks to propose changes when you do not have direct write access. Link a branch and PR to the issue.",
+      "example": "git branch -a",
+      "lab": {
+        "prompt": "Inspect all local and remote-tracking branch names.",
+        "answer": "git branch -a",
+        "hint": "The branch command can include all references with -a."
+      },
+      "concepts": [
+        {
+          "term": "Fork",
+          "definition": "A separate repository derived from another repository, often used for contributions."
+        },
+        {
+          "term": "Issue",
+          "definition": "A tracked piece of work, bug report, or discussion item."
+        },
+        {
+          "term": "Upstream remote",
+          "definition": "A conventional name for the original repository when your fork uses origin."
+        }
+      ],
+      "scenario": {
+        "question": "You cannot push to an open-source project. Which contribution path fits?",
+        "options": [
+          "Fork, branch, PR",
+          "Ask everyone to share credentials",
+          "Push with sudo",
+          "Download and edit the ZIP only"
+        ],
+        "correct": 0,
+        "explanation": "A fork enables collaboration without direct write access to the source repository."
+      },
+      "tip": "Keep PRs focused; one small issue per PR is easier to review.",
+      "order": 8,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.github.com/en/get-started"
+      ],
+      "objective": "Explain fork and apply it in a practical workflow.",
+      "takeaways": [
+        "Fork: A separate repository derived from another repository, often used for contributions.",
+        "Issue: A tracked piece of work, bug report, or discussion item.",
+        "Upstream remote: A conventional name for the original repository when your fork uses origin."
+      ],
+      "questStory": "Mission 08: Your team needs you to apply forks, issues, and contributions safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "github-4",
+      "world": "github",
+      "number": 4,
+      "title": "Resolve merge conflicts",
+      "summary": "A conflict occurs when Git cannot reconcile overlapping changes automatically. Inspect conflict markers, decide desired content, stage resolution, then finish the operation.",
+      "example": "git status\ngit diff --check",
+      "lab": {
+        "prompt": "Check files for whitespace errors and conflict-related formatting mistakes.",
+        "answer": "git diff --check",
+        "hint": "Use diff with the --check flag."
+      },
+      "concepts": [
+        {
+          "term": "Conflict marker",
+          "definition": "Temporary <<<<<<<, =======, >>>>>>> lines identifying competing edits."
+        },
+        {
+          "term": "Conflict resolution",
+          "definition": "Human-selected merged content staged to continue merge or rebase."
+        },
+        {
+          "term": "git diff --check",
+          "definition": "Finds whitespace errors in diffs, useful before completion."
+        }
+      ],
+      "scenario": {
+        "question": "After editing away conflict markers, what signals resolution?",
+        "options": [
+          "git add the resolved file",
+          "git init again",
+          "git clone --bare",
+          "Delete .git"
+        ],
+        "correct": 0,
+        "explanation": "Staging tells Git the conflict was resolved in that path."
+      },
+      "tip": "Resolve based on intended behavior, not merely deleting every line around a marker.",
+      "order": 9,
+      "xp": 100,
+      "minutes": 15,
+      "isBoss": false,
+      "sources": [
+        "https://docs.github.com/en/get-started"
+      ],
+      "objective": "Explain conflict marker and apply it in a practical workflow.",
+      "takeaways": [
+        "Conflict marker: Temporary <<<<<<<, =======, >>>>>>> lines identifying competing edits.",
+        "Conflict resolution: Human-selected merged content staged to continue merge or rebase.",
+        "git diff --check: Finds whitespace errors in diffs, useful before completion."
+      ],
+      "questStory": "Mission 09: Your team needs you to apply resolve merge conflicts safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "github-5",
+      "world": "github",
+      "number": 5,
+      "title": "Automate with GitHub Actions",
+      "summary": "A workflow YAML under .github/workflows declares events, jobs, and steps. Scope permissions to minimum necessary and pin trusted dependencies.",
+      "example": "git ls-files .github/workflows",
+      "lab": {
+        "prompt": "List tracked GitHub Actions workflow files.",
+        "answer": "git ls-files .github/workflows",
+        "hint": "Use ls-files with the workflows folder."
+      },
+      "concepts": [
+        {
+          "term": "Workflow",
+          "definition": "A YAML-defined automation triggered by repository events or manually."
+        },
+        {
+          "term": "Job",
+          "definition": "A set of steps running in an environment, typically a runner."
+        },
+        {
+          "term": "GITHUB_TOKEN",
+          "definition": "Ephemeral workflow credential whose permissions should be limited."
+        }
+      ],
+      "scenario": {
+        "question": "A CI job only reads code and runs tests. Which permissions are appropriate?",
+        "options": [
+          "Broad write-all",
+          "Read-only contents",
+          "Admin permission",
+          "No access control at all"
+        ],
+        "correct": 1,
+        "explanation": "Most test jobs only need repository contents: read."
+      },
+      "tip": "Never print secrets to logs or run untrusted PR code with privileged secrets.",
+      "order": 10,
+      "xp": 180,
+      "minutes": 15,
+      "isBoss": true,
+      "sources": [
+        "https://docs.github.com/en/get-started"
+      ],
+      "objective": "Explain workflow and apply it in a practical workflow.",
+      "takeaways": [
+        "Workflow: A YAML-defined automation triggered by repository events or manually.",
+        "Job: A set of steps running in an environment, typically a runner.",
+        "GITHUB_TOKEN: Ephemeral workflow credential whose permissions should be limited."
+      ],
+      "questStory": "Mission 10: Your team needs you to apply automate with github actions safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "docker-1",
+      "world": "docker",
+      "number": 1,
+      "title": "Images versus containers",
+      "summary": "An image is the packaged, layered filesystem and config. A container is a running or stopped instance with isolated processes and a writable layer.",
+      "example": "docker version\ndocker image ls",
+      "lab": {
+        "prompt": "List images available locally.",
+        "answer": "docker image ls",
+        "hint": "Use docker image followed by the list subcommand."
+      },
+      "concepts": [
+        {
+          "term": "Image",
+          "definition": "An immutable-by-digest bundle of filesystem layers and execution configuration."
+        },
+        {
+          "term": "Container",
+          "definition": "An instance of an image with process isolation and its own writable layer."
+        },
+        {
+          "term": "Registry",
+          "definition": "A service that stores and distributes OCI container images."
+        }
+      ],
+      "scenario": {
+        "question": "You want three running replicas of one application. What can you reuse?",
+        "options": [
+          "One image",
+          "One PID",
+          "One writable layer",
+          "A single network port mapping"
+        ],
+        "correct": 0,
+        "explanation": "Each replica can be a distinct container based on the same image."
+      },
+      "tip": "Tags such as latest are mutable; pin digests when reproducibility matters.",
+      "order": 11,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/get-started/"
+      ],
+      "objective": "Explain image and apply it in a practical workflow.",
+      "takeaways": [
+        "Image: An immutable-by-digest bundle of filesystem layers and execution configuration.",
+        "Container: An instance of an image with process isolation and its own writable layer.",
+        "Registry: A service that stores and distributes OCI container images."
+      ],
+      "questStory": "Mission 11: Your team needs you to apply images versus containers safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "docker-2",
+      "world": "docker",
+      "number": 2,
+      "title": "Run and inspect containers",
+      "summary": "Start a container with docker run, list with docker ps, inspect metadata, and read logs. Published ports connect host traffic to a container port.",
+      "example": "docker run --rm hello-world\ndocker ps -a",
+      "lab": {
+        "prompt": "List all containers, including stopped ones.",
+        "answer": "docker ps -a",
+        "hint": "Use ps and include stopped containers."
+      },
+      "concepts": [
+        {
+          "term": "docker run",
+          "definition": "Creates and starts a new container from an image."
+        },
+        {
+          "term": "docker ps -a",
+          "definition": "Shows both running and stopped containers."
+        },
+        {
+          "term": "Port publishing",
+          "definition": "Maps a host port to a container port using -p HOST:CONTAINER."
+        }
+      ],
+      "scenario": {
+        "question": "An app listens on port 80 in a container, reachable on localhost:8080. What run flag is needed?",
+        "options": [
+          "-p 8080:80",
+          "-p 80:8080",
+          "--network none",
+          "-v 8080:80"
+        ],
+        "correct": 0,
+        "explanation": "The left side of -p is the host port, the right side the container port."
+      },
+      "tip": "Avoid publishing databases publicly unless there is a deliberate access policy.",
+      "order": 12,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/get-started/"
+      ],
+      "objective": "Explain docker run and apply it in a practical workflow.",
+      "takeaways": [
+        "docker run: Creates and starts a new container from an image.",
+        "docker ps -a: Shows both running and stopped containers.",
+        "Port publishing: Maps a host port to a container port using -p HOST:CONTAINER."
+      ],
+      "questStory": "Mission 12: Your team needs you to apply run and inspect containers safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "docker-3",
+      "world": "docker",
+      "number": 3,
+      "title": "Container lifecycle and logs",
+      "summary": "A container can be created, running, exited, or removed. Logs expose stdout/stderr; exec starts a process inside an already-running container.",
+      "example": "docker ps -a\ndocker logs web",
+      "lab": {
+        "prompt": "Read recent logs for a running container named web.",
+        "answer": "docker logs web",
+        "hint": "Use logs with the container name."
+      },
+      "concepts": [
+        {
+          "term": "docker logs",
+          "definition": "Reads captured stdout and stderr from a container."
+        },
+        {
+          "term": "docker exec",
+          "definition": "Starts an additional process within a running container."
+        },
+        {
+          "term": "docker stop",
+          "definition": "Requests graceful shutdown, then may force stop after a timeout."
+        }
+      ],
+      "scenario": {
+        "question": "Your service exited immediately. What should you inspect first?",
+        "options": [
+          "docker logs <name>",
+          "docker volume prune",
+          "docker rmi -f",
+          "Restart the host"
+        ],
+        "correct": 0,
+        "explanation": "The process output commonly explains startup failures."
+      },
+      "tip": "Running an interactive shell does not fix a broken image; make corrections in source and rebuild.",
+      "order": 13,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/get-started/"
+      ],
+      "objective": "Explain docker logs and apply it in a practical workflow.",
+      "takeaways": [
+        "docker logs: Reads captured stdout and stderr from a container.",
+        "docker exec: Starts an additional process within a running container.",
+        "docker stop: Requests graceful shutdown, then may force stop after a timeout."
+      ],
+      "questStory": "Mission 13: Your team needs you to apply container lifecycle and logs safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "docker-4",
+      "world": "docker",
+      "number": 4,
+      "title": "Volumes and persistence",
+      "summary": "A container writable layer is removed when its container is removed. Named volumes store mutable application data outside that layer; bind mounts expose host paths.",
+      "example": "docker volume ls",
+      "lab": {
+        "prompt": "List volumes managed by Docker.",
+        "answer": "docker volume ls",
+        "hint": "List volumes with the volume subcommand."
+      },
+      "concepts": [
+        {
+          "term": "Named volume",
+          "definition": "Docker-managed persistent storage surviving container replacement until explicitly deleted."
+        },
+        {
+          "term": "Bind mount",
+          "definition": "Maps a chosen host directory or file into a container."
+        },
+        {
+          "term": "Writable layer",
+          "definition": "Container-specific filesystem changes that are not part of its image."
+        }
+      ],
+      "scenario": {
+        "question": "You replace a database container but must retain data. Best default?",
+        "options": [
+          "Named volume",
+          "Only container writable layer",
+          "Build with --no-cache",
+          "Commit database into image"
+        ],
+        "correct": 0,
+        "explanation": "A named volume outlives a single container instance."
+      },
+      "tip": "Beware docker compose down -v: the -v flag removes named volumes declared by the project.",
+      "order": 14,
+      "xp": 100,
+      "minutes": 15,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/get-started/"
+      ],
+      "objective": "Explain named volume and apply it in a practical workflow.",
+      "takeaways": [
+        "Named volume: Docker-managed persistent storage surviving container replacement until explicitly deleted.",
+        "Bind mount: Maps a chosen host directory or file into a container.",
+        "Writable layer: Container-specific filesystem changes that are not part of its image."
+      ],
+      "questStory": "Mission 14: Your team needs you to apply volumes and persistence safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "docker-5",
+      "world": "docker",
+      "number": 5,
+      "title": "Networking and container DNS",
+      "summary": "On a user-defined bridge network, containers can reach one another by name. Only publish ports that need host access, and avoid hardcoded container IPs.",
+      "example": "docker network ls",
+      "lab": {
+        "prompt": "List Docker networks available on this host.",
+        "answer": "docker network ls",
+        "hint": "Use docker network and a listing subcommand."
+      },
+      "concepts": [
+        {
+          "term": "Bridge network",
+          "definition": "A common single-host Docker network mode providing container connectivity."
+        },
+        {
+          "term": "Service discovery",
+          "definition": "Resolution of container/service names to reachable network addresses."
+        },
+        {
+          "term": "Host port",
+          "definition": "A port published on a host interface and forwarded to a container port."
+        }
+      ],
+      "scenario": {
+        "question": "A web container connects to a db service in the same Compose network. Hostname should be:",
+        "options": [
+          "localhost",
+          "db",
+          "127.0.0.1",
+          "The host public IP"
+        ],
+        "correct": 1,
+        "explanation": "Compose networks provide internal DNS resolving service names."
+      },
+      "tip": "Inside a container localhost refers to that container, not your database sibling.",
+      "order": 15,
+      "xp": 180,
+      "minutes": 15,
+      "isBoss": true,
+      "sources": [
+        "https://docs.docker.com/get-started/"
+      ],
+      "objective": "Explain bridge network and apply it in a practical workflow.",
+      "takeaways": [
+        "Bridge network: A common single-host Docker network mode providing container connectivity.",
+        "Service discovery: Resolution of container/service names to reachable network addresses.",
+        "Host port: A port published on a host interface and forwarded to a container port."
+      ],
+      "questStory": "Mission 15: Your team needs you to apply networking and container dns safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "engineering-1",
+      "world": "engineering",
+      "number": 1,
+      "title": "Write your first Dockerfile",
+      "summary": "A Dockerfile describes image assembly. FROM picks a base, WORKDIR a working directory, COPY adds content, and CMD defines a default command.",
+      "example": "docker build -t academy:v1 .",
+      "lab": {
+        "prompt": "Build an image named academy with tag v1 from the current directory.",
+        "answer": "docker build -t academy:v1 .",
+        "hint": "Use build -t and finish with a dot for the context."
+      },
+      "concepts": [
+        {
+          "term": "FROM",
+          "definition": "Sets a base image or build stage source."
+        },
+        {
+          "term": "COPY",
+          "definition": "Copies build-context files into the image filesystem."
+        },
+        {
+          "term": "CMD",
+          "definition": "Defines the default command or arguments when starting a container."
+        }
+      ],
+      "scenario": {
+        "question": "Which Dockerfile instruction copies local application source?",
+        "options": [
+          "COPY",
+          "EXPOSE",
+          "LABEL",
+          "HEALTHCHECK"
+        ],
+        "correct": 0,
+        "explanation": "COPY adds source files from the build context."
+      },
+      "tip": "EXPOSE documents a port but does not publish it on the host.",
+      "order": 16,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/build/"
+      ],
+      "objective": "Explain from and apply it in a practical workflow.",
+      "takeaways": [
+        "FROM: Sets a base image or build stage source.",
+        "COPY: Copies build-context files into the image filesystem.",
+        "CMD: Defines the default command or arguments when starting a container."
+      ],
+      "questStory": "Mission 16: Your team needs you to apply write your first dockerfile safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "engineering-2",
+      "world": "engineering",
+      "number": 2,
+      "title": "Image layers and caching",
+      "summary": "Layer-aware builds reuse earlier work when inputs have not changed. Copy dependency manifests first, install dependencies, then copy frequently changed source files.",
+      "example": "docker history academy:v1",
+      "lab": {
+        "prompt": "Show the layer/build history for an image called academy:v1.",
+        "answer": "docker history academy:v1",
+        "hint": "Use docker history and the image tag."
+      },
+      "concepts": [
+        {
+          "term": "Layer cache",
+          "definition": "Reuse of build steps when instructions and dependency inputs match."
+        },
+        {
+          "term": "Build context",
+          "definition": "Files sent or made available to an image build."
+        },
+        {
+          "term": ".dockerignore",
+          "definition": "Patterns excluding unnecessary files from the build context."
+        }
+      ],
+      "scenario": {
+        "question": "Why copy package-lock.json before source code in a Node Dockerfile?",
+        "options": [
+          "To reuse dependency-install cache",
+          "To expose a port",
+          "To avoid images entirely",
+          "To assign an IP"
+        ],
+        "correct": 0,
+        "explanation": "Dependencies often change less frequently than source files."
+      },
+      "tip": "Never COPY . before excluding .git, node_modules, and secret files.",
+      "order": 17,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/build/"
+      ],
+      "objective": "Explain layer cache and apply it in a practical workflow.",
+      "takeaways": [
+        "Layer cache: Reuse of build steps when instructions and dependency inputs match.",
+        "Build context: Files sent or made available to an image build.",
+        ".dockerignore: Patterns excluding unnecessary files from the build context."
+      ],
+      "questStory": "Mission 17: Your team needs you to apply image layers and caching safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "engineering-3",
+      "world": "engineering",
+      "number": 3,
+      "title": "Compose multi-service apps",
+      "summary": "Compose defines services, networks, volumes, and configuration as versioned YAML. Services share default-network DNS by service name.",
+      "example": "docker compose config",
+      "lab": {
+        "prompt": "Validate and render the effective Compose configuration.",
+        "answer": "docker compose config",
+        "hint": "Compose supports a config validation command."
+      },
+      "concepts": [
+        {
+          "term": "Compose service",
+          "definition": "A named container specification under services in compose.yaml."
+        },
+        {
+          "term": "depends_on",
+          "definition": "Expresses dependency ordering; readiness needs additional health conditions."
+        },
+        {
+          "term": "docker compose config",
+          "definition": "Parses and validates a Compose project and prints normalized configuration."
+        }
+      ],
+      "scenario": {
+        "question": "Your API needs Redis. Which hostname should it call inside Compose?",
+        "options": [
+          "127.0.0.1",
+          "redis, the service name",
+          "0.0.0.0",
+          "Your laptop name"
+        ],
+        "correct": 1,
+        "explanation": "A service can resolve another service through Compose network DNS."
+      },
+      "tip": "depends_on alone does not guarantee the dependency is application-ready.",
+      "order": 18,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/build/"
+      ],
+      "objective": "Explain compose service and apply it in a practical workflow.",
+      "takeaways": [
+        "Compose service: A named container specification under services in compose.yaml.",
+        "depends_on: Expresses dependency ordering; readiness needs additional health conditions.",
+        "docker compose config: Parses and validates a Compose project and prints normalized configuration."
+      ],
+      "questStory": "Mission 18: Your team needs you to apply compose multi-service apps safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "engineering-4",
+      "world": "engineering",
+      "number": 4,
+      "title": "Small and hardened images",
+      "summary": "Use multi-stage builds to avoid shipping compilers, pin trusted bases, run as non-root, drop unneeded capabilities, and never bake passwords into layers.",
+      "example": "docker image inspect academy:v1",
+      "lab": {
+        "prompt": "Inspect metadata of the image academy:v1.",
+        "answer": "docker image inspect academy:v1",
+        "hint": "Use image inspect with the tagged image."
+      },
+      "concepts": [
+        {
+          "term": "Multi-stage build",
+          "definition": "Copies just the runtime artifacts out of earlier build stages."
+        },
+        {
+          "term": "USER instruction",
+          "definition": "Selects a non-root user for later build steps and runtime execution."
+        },
+        {
+          "term": "Image digest",
+          "definition": "Content-addressed identifier that can pin a specific image version."
+        }
+      ],
+      "scenario": {
+        "question": "Which practice reduces runtime attack surface?",
+        "options": [
+          "Run as root for convenience",
+          "Multi-stage build with minimal runtime",
+          "Store secrets in ENV layers",
+          "Install debugging tools in production"
+        ],
+        "correct": 1,
+        "explanation": "Removing build tools and dependencies reduces exposed runtime components."
+      },
+      "tip": "ARG and ENV do not provide safe permanent storage for build secrets.",
+      "order": 19,
+      "xp": 100,
+      "minutes": 15,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/build/"
+      ],
+      "objective": "Explain multi-stage build and apply it in a practical workflow.",
+      "takeaways": [
+        "Multi-stage build: Copies just the runtime artifacts out of earlier build stages.",
+        "USER instruction: Selects a non-root user for later build steps and runtime execution.",
+        "Image digest: Content-addressed identifier that can pin a specific image version."
+      ],
+      "questStory": "Mission 19: Your team needs you to apply small and hardened images safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "engineering-5",
+      "world": "engineering",
+      "number": 5,
+      "title": "Health and observability",
+      "summary": "Use health checks to detect when an application cannot serve requests, but distinguish process startup from readiness. Collect structured logs and explicit service metrics.",
+      "example": "docker stats --no-stream",
+      "lab": {
+        "prompt": "Capture one snapshot of container CPU and memory usage.",
+        "answer": "docker stats --no-stream",
+        "hint": "Use stats without continuous streaming."
+      },
+      "concepts": [
+        {
+          "term": "Healthcheck",
+          "definition": "A repeated probe used to mark container health independently of process existence."
+        },
+        {
+          "term": "Readiness",
+          "definition": "Whether an application is currently ready to accept useful traffic."
+        },
+        {
+          "term": "docker stats",
+          "definition": "Shows live CPU, memory, network, and I/O resource usage."
+        }
+      ],
+      "scenario": {
+        "question": "A process is running but cannot reach its database. What reveals the issue better?",
+        "options": [
+          "Only PID exists",
+          "A meaningful health endpoint",
+          "An image tag",
+          "A git branch"
+        ],
+        "correct": 1,
+        "explanation": "Health checks should reflect application dependencies and service function."
+      },
+      "tip": "Avoid making liveness depend on every transient external dependency or restarts can amplify failures.",
+      "order": 20,
+      "xp": 180,
+      "minutes": 15,
+      "isBoss": true,
+      "sources": [
+        "https://docs.docker.com/build/"
+      ],
+      "objective": "Explain healthcheck and apply it in a practical workflow.",
+      "takeaways": [
+        "Healthcheck: A repeated probe used to mark container health independently of process existence.",
+        "Readiness: Whether an application is currently ready to accept useful traffic.",
+        "docker stats: Shows live CPU, memory, network, and I/O resource usage."
+      ],
+      "questStory": "Mission 20: Your team needs you to apply health and observability safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "kubernetes-1",
+      "world": "kubernetes",
+      "number": 1,
+      "title": "Cluster architecture",
+      "summary": "A cluster has a control plane reconciling desired state and worker nodes running Pods. kubectl communicates with the API server according to your context.",
+      "example": "kubectl cluster-info",
+      "lab": {
+        "prompt": "Display information about the configured Kubernetes control plane.",
+        "answer": "kubectl cluster-info",
+        "hint": "Use cluster-info."
+      },
+      "concepts": [
+        {
+          "term": "Control plane",
+          "definition": "Components coordinating desired state, API access, and scheduling."
+        },
+        {
+          "term": "Node",
+          "definition": "A machine providing resources for Pods."
+        },
+        {
+          "term": "kubectl",
+          "definition": "Command-line client for talking to the Kubernetes API."
+        }
+      ],
+      "scenario": {
+        "question": "Which component accepts Kubernetes API requests?",
+        "options": [
+          "API server",
+          "Dockerfile",
+          "Git remotes",
+          "Volume driver"
+        ],
+        "correct": 0,
+        "explanation": "The API server is the front door for cluster operations."
+      },
+      "tip": "Confirm kubectl context before applying or deleting resources.",
+      "order": 21,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://kubernetes.io/docs/tutorials/kubernetes-basics/"
+      ],
+      "objective": "Explain control plane and apply it in a practical workflow.",
+      "takeaways": [
+        "Control plane: Components coordinating desired state, API access, and scheduling.",
+        "Node: A machine providing resources for Pods.",
+        "kubectl: Command-line client for talking to the Kubernetes API."
+      ],
+      "questStory": "Mission 21: Your team needs you to apply cluster architecture safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "kubernetes-2",
+      "world": "kubernetes",
+      "number": 2,
+      "title": "Pods and deployments",
+      "summary": "A Pod is a scheduling unit containing one or more containers. A Deployment manages replicated, replaceable Pods via ReplicaSets and rollout strategies.",
+      "example": "kubectl get deployments",
+      "lab": {
+        "prompt": "List Deployments in the active namespace.",
+        "answer": "kubectl get deployments",
+        "hint": "Ask kubectl to get deployments."
+      },
+      "concepts": [
+        {
+          "term": "Pod",
+          "definition": "Smallest deployable Kubernetes unit sharing networking and storage among containers."
+        },
+        {
+          "term": "Deployment",
+          "definition": "Controller that maintains desired replicas and orchestrates rolling updates."
+        },
+        {
+          "term": "ReplicaSet",
+          "definition": "Controller maintaining a target number of matching Pods."
+        }
+      ],
+      "scenario": {
+        "question": "A Pod crashes and must be recreated automatically. What should own it?",
+        "options": [
+          "Deployment",
+          "Local git tag",
+          "Manual SSH script",
+          "Docker image name"
+        ],
+        "correct": 0,
+        "explanation": "A Deployment controller replaces unhealthy or missing Pods."
+      },
+      "tip": "Do not treat individual Pod names as stable endpoints.",
+      "order": 22,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://kubernetes.io/docs/tutorials/kubernetes-basics/"
+      ],
+      "objective": "Explain pod and apply it in a practical workflow.",
+      "takeaways": [
+        "Pod: Smallest deployable Kubernetes unit sharing networking and storage among containers.",
+        "Deployment: Controller that maintains desired replicas and orchestrates rolling updates.",
+        "ReplicaSet: Controller maintaining a target number of matching Pods."
+      ],
+      "questStory": "Mission 22: Your team needs you to apply pods and deployments safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "kubernetes-3",
+      "world": "kubernetes",
+      "number": 3,
+      "title": "Services and networking",
+      "summary": "Pods are ephemeral; a Service exposes a stable virtual address and selects backing Pods by labels. Ingress and Gateway APIs manage incoming HTTP traffic patterns.",
+      "example": "kubectl get services",
+      "lab": {
+        "prompt": "List cluster Services in your active namespace.",
+        "answer": "kubectl get services",
+        "hint": "Use get services."
+      },
+      "concepts": [
+        {
+          "term": "Service",
+          "definition": "Stable abstraction for addressing a selected set of Pods."
+        },
+        {
+          "term": "ClusterIP",
+          "definition": "The default Service type, reachable within the cluster network."
+        },
+        {
+          "term": "Ingress",
+          "definition": "API resource describing HTTP(S) ingress rules when an ingress controller is installed."
+        }
+      ],
+      "scenario": {
+        "question": "Your frontend must reach replaceable backend Pods. Use:",
+        "options": [
+          "Backend Pod IP hardcoded",
+          "Backend Service DNS name",
+          "Node filesystem path",
+          "A commit SHA"
+        ],
+        "correct": 1,
+        "explanation": "The Service remains a stable endpoint as Pods come and go."
+      },
+      "tip": "A Service selector must match target Pod labels, or it will have no endpoints.",
+      "order": 23,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://kubernetes.io/docs/tutorials/kubernetes-basics/"
+      ],
+      "objective": "Explain service and apply it in a practical workflow.",
+      "takeaways": [
+        "Service: Stable abstraction for addressing a selected set of Pods.",
+        "ClusterIP: The default Service type, reachable within the cluster network.",
+        "Ingress: API resource describing HTTP(S) ingress rules when an ingress controller is installed."
+      ],
+      "questStory": "Mission 23: Your team needs you to apply services and networking safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "kubernetes-4",
+      "world": "kubernetes",
+      "number": 4,
+      "title": "Configuration, secrets, storage",
+      "summary": "ConfigMaps hold non-sensitive configuration; Secrets store sensitive bytes but need proper RBAC and encryption at rest. PVCs request durable volume storage.",
+      "example": "kubectl get configmaps",
+      "lab": {
+        "prompt": "List ConfigMaps in the active namespace.",
+        "answer": "kubectl get configmaps",
+        "hint": "Use get configmaps."
+      },
+      "concepts": [
+        {
+          "term": "ConfigMap",
+          "definition": "API object providing non-confidential app configuration."
+        },
+        {
+          "term": "Secret",
+          "definition": "API object for sensitive values; base64 encoding alone is not encryption."
+        },
+        {
+          "term": "PersistentVolumeClaim",
+          "definition": "Request for storage, commonly provisioned by a StorageClass."
+        }
+      ],
+      "scenario": {
+        "question": "A database password must be injected into a Pod. Better primitive?",
+        "options": [
+          "ConfigMap",
+          "Secret with proper access controls",
+          "Image label",
+          "Pod annotation in a public repo"
+        ],
+        "correct": 1,
+        "explanation": "Kubernetes Secret is built for sensitive config but still requires security controls."
+      },
+      "tip": "Never commit raw kubeconfig or unencrypted secrets to a public repository.",
+      "order": 24,
+      "xp": 100,
+      "minutes": 15,
+      "isBoss": false,
+      "sources": [
+        "https://kubernetes.io/docs/tutorials/kubernetes-basics/"
+      ],
+      "objective": "Explain configmap and apply it in a practical workflow.",
+      "takeaways": [
+        "ConfigMap: API object providing non-confidential app configuration.",
+        "Secret: API object for sensitive values; base64 encoding alone is not encryption.",
+        "PersistentVolumeClaim: Request for storage, commonly provisioned by a StorageClass."
+      ],
+      "questStory": "Mission 24: Your team needs you to apply configuration, secrets, storage safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "kubernetes-5",
+      "world": "kubernetes",
+      "number": 5,
+      "title": "Debugging and scaling",
+      "summary": "Inspect describe/events/logs before guessing. Scale Deployments deliberately and use resource requests, limits, and autoscaling when load warrants it.",
+      "example": "kubectl get pods -o wide",
+      "lab": {
+        "prompt": "List Pods with extended scheduling and IP information.",
+        "answer": "kubectl get pods -o wide",
+        "hint": "Include -o wide when getting pods."
+      },
+      "concepts": [
+        {
+          "term": "kubectl describe",
+          "definition": "Provides detailed object state and related events for diagnosis."
+        },
+        {
+          "term": "Resource request",
+          "definition": "Amount of CPU or memory used by the scheduler for placement."
+        },
+        {
+          "term": "HorizontalPodAutoscaler",
+          "definition": "Controller adjusting replica count based on configured metrics."
+        }
+      ],
+      "scenario": {
+        "question": "A Pod sits in Pending state. Which first action is useful?",
+        "options": [
+          "kubectl describe pod <name>",
+          "Delete the namespace",
+          "Reinstall Git",
+          "Remove every limit"
+        ],
+        "correct": 0,
+        "explanation": "Events often explain failed scheduling and unbound volumes."
+      },
+      "tip": "Autoscaling cannot compensate for an application that is fundamentally unhealthy.",
+      "order": 25,
+      "xp": 180,
+      "minutes": 15,
+      "isBoss": true,
+      "sources": [
+        "https://kubernetes.io/docs/tutorials/kubernetes-basics/"
+      ],
+      "objective": "Explain kubectl describe and apply it in a practical workflow.",
+      "takeaways": [
+        "kubectl describe: Provides detailed object state and related events for diagnosis.",
+        "Resource request: Amount of CPU or memory used by the scheduler for placement.",
+        "HorizontalPodAutoscaler: Controller adjusting replica count based on configured metrics."
+      ],
+      "questStory": "Mission 25: Your team needs you to apply debugging and scaling safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "cloud-1",
+      "world": "cloud",
+      "number": 1,
+      "title": "Cloud models and shared responsibility",
+      "summary": "Cloud services offer on-demand resources. You still own identity, data classification, application logic, and many configuration choices even when a provider operates hardware.",
+      "example": "aws --version",
+      "lab": {
+        "prompt": "Check the AWS CLI version in a local sandbox (no credentials needed).",
+        "answer": "aws --version",
+        "hint": "Use aws followed by its version flag."
+      },
+      "concepts": [
+        {
+          "term": "IaaS",
+          "definition": "Infrastructure as a Service: rented compute, network, and storage primitives."
+        },
+        {
+          "term": "PaaS",
+          "definition": "Platform as a Service: managed runtime and deployment platform."
+        },
+        {
+          "term": "Shared responsibility",
+          "definition": "Security duties are split between provider and customer depending on service."
+        }
+      ],
+      "scenario": {
+        "question": "On a managed database, who decides which app users get access?",
+        "options": [
+          "Cloud provider alone",
+          "Customer configuring IAM and database accounts",
+          "DNS registrar",
+          "Hardware manufacturer"
+        ],
+        "correct": 1,
+        "explanation": "Providers operate managed infrastructure, customers control their identities and data access."
+      },
+      "tip": "A service being managed does not imply it is securely configured by default.",
+      "order": 26,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-cloud-concepts/"
+      ],
+      "objective": "Explain iaas and apply it in a practical workflow.",
+      "takeaways": [
+        "IaaS: Infrastructure as a Service: rented compute, network, and storage primitives.",
+        "PaaS: Platform as a Service: managed runtime and deployment platform.",
+        "Shared responsibility: Security duties are split between provider and customer depending on service."
+      ],
+      "questStory": "Mission 26: Your team needs you to apply cloud models and shared responsibility safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "cloud-2",
+      "world": "cloud",
+      "number": 2,
+      "title": "Compute decision matrix",
+      "summary": "Virtual machines provide OS-level control, containers package applications, and serverless functions handle event-driven tasks. Choose based on workload and operational constraints.",
+      "example": "docker info",
+      "lab": {
+        "prompt": "Inspect local Docker daemon and runtime information.",
+        "answer": "docker info",
+        "hint": "Ask Docker for daemon details."
+      },
+      "concepts": [
+        {
+          "term": "Virtual machine",
+          "definition": "Virtualized hardware and guest operating system managed as an instance."
+        },
+        {
+          "term": "Managed container runtime",
+          "definition": "Platform that schedules or runs containers while abstracting parts of the host."
+        },
+        {
+          "term": "Serverless function",
+          "definition": "Event-triggered compute charged by invocation or execution resources, with platform constraints."
+        }
+      ],
+      "scenario": {
+        "question": "An occasional image resize job is event-driven and short. Which model often fits?",
+        "options": [
+          "Managed functions",
+          "Dedicated always-on bare metal",
+          "Self-hosted DNS",
+          "Block volume alone"
+        ],
+        "correct": 0,
+        "explanation": "Functions can avoid idle compute cost for bursty short tasks."
+      },
+      "tip": "Serverless still requires observability, least-privilege IAM, and concurrency limits.",
+      "order": 27,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-cloud-concepts/"
+      ],
+      "objective": "Explain virtual machine and apply it in a practical workflow.",
+      "takeaways": [
+        "Virtual machine: Virtualized hardware and guest operating system managed as an instance.",
+        "Managed container runtime: Platform that schedules or runs containers while abstracting parts of the host.",
+        "Serverless function: Event-triggered compute charged by invocation or execution resources, with platform constraints."
+      ],
+      "questStory": "Mission 27: Your team needs you to apply compute decision matrix safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "cloud-3",
+      "world": "cloud",
+      "number": 3,
+      "title": "Object, block, and file storage",
+      "summary": "Object storage scales for blobs accessed by API, block volumes back filesystems and databases, and managed file shares allow concurrent filesystem access.",
+      "example": "aws s3 help",
+      "lab": {
+        "prompt": "Open CLI documentation for S3 operations without contacting AWS.",
+        "answer": "aws s3 help",
+        "hint": "Use the S3 CLI help subcommand."
+      },
+      "concepts": [
+        {
+          "term": "Object storage",
+          "definition": "Key-addressed storage for durable blobs such as backups, media, and logs."
+        },
+        {
+          "term": "Block storage",
+          "definition": "Mountable block device used for structured filesystems and many databases."
+        },
+        {
+          "term": "File storage",
+          "definition": "Shared filesystem interface often used by multiple compute instances."
+        }
+      ],
+      "scenario": {
+        "question": "You need durable user uploads at massive scale. Which primitive is common?",
+        "options": [
+          "Object storage",
+          "Ephemeral container layer",
+          "A CPU core",
+          "A security group"
+        ],
+        "correct": 0,
+        "explanation": "Object storage is designed for durable blobs served via APIs."
+      },
+      "tip": "Use least-privilege bucket policies and disable public access unless explicitly required.",
+      "order": 28,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-cloud-concepts/"
+      ],
+      "objective": "Explain object storage and apply it in a practical workflow.",
+      "takeaways": [
+        "Object storage: Key-addressed storage for durable blobs such as backups, media, and logs.",
+        "Block storage: Mountable block device used for structured filesystems and many databases.",
+        "File storage: Shared filesystem interface often used by multiple compute instances."
+      ],
+      "questStory": "Mission 28: Your team needs you to apply object, block, and file storage safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "cloud-4",
+      "world": "cloud",
+      "number": 4,
+      "title": "VPC, subnets, and endpoints",
+      "summary": "A virtual private cloud segments IP ranges, routes traffic, and uses firewalls or security groups. Private workloads should not need public IPs to communicate internally.",
+      "example": "aws ec2 help",
+      "lab": {
+        "prompt": "Read the AWS CLI EC2 command help locally.",
+        "answer": "aws ec2 help",
+        "hint": "Use EC2 help from the CLI."
+      },
+      "concepts": [
+        {
+          "term": "VPC",
+          "definition": "Logically isolated virtual network holding subnets, routes, and interfaces."
+        },
+        {
+          "term": "Subnet",
+          "definition": "An IP address range within a larger virtual network and location scope."
+        },
+        {
+          "term": "Security group",
+          "definition": "Stateful traffic control applied to supported cloud network interfaces."
+        }
+      ],
+      "scenario": {
+        "question": "Where should a private production database generally live?",
+        "options": [
+          "Private subnet without public exposure",
+          "Public subnet with 0.0.0.0/0 database ingress",
+          "Anywhere with a short password",
+          "On a static website host"
+        ],
+        "correct": 0,
+        "explanation": "A private subnet and tight network rules reduce direct exposure."
+      },
+      "tip": "A private subnet alone is not a full defense; permissions and traffic rules still matter.",
+      "order": 29,
+      "xp": 100,
+      "minutes": 15,
+      "isBoss": false,
+      "sources": [
+        "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-cloud-concepts/"
+      ],
+      "objective": "Explain vpc and apply it in a practical workflow.",
+      "takeaways": [
+        "VPC: Logically isolated virtual network holding subnets, routes, and interfaces.",
+        "Subnet: An IP address range within a larger virtual network and location scope.",
+        "Security group: Stateful traffic control applied to supported cloud network interfaces."
+      ],
+      "questStory": "Mission 29: Your team needs you to apply vpc, subnets, and endpoints safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "cloud-5",
+      "world": "cloud",
+      "number": 5,
+      "title": "Identity, resilience, and backups",
+      "summary": "Authentication proves identity; authorization grants limited rights. Design for failures across failure domains and test that backups can actually be restored.",
+      "example": "aws iam help",
+      "lab": {
+        "prompt": "Read local IAM CLI help (no cloud changes).",
+        "answer": "aws iam help",
+        "hint": "Use IAM CLI help."
+      },
+      "concepts": [
+        {
+          "term": "Least privilege",
+          "definition": "Grant only the specific permissions needed for a task."
+        },
+        {
+          "term": "Availability zone",
+          "definition": "A distinct infrastructure failure domain within a region, provider-specific details vary."
+        },
+        {
+          "term": "Recovery point objective",
+          "definition": "Maximum tolerable amount of data loss expressed as time."
+        }
+      ],
+      "scenario": {
+        "question": "A service only needs to read one object bucket. Which IAM policy fits?",
+        "options": [
+          "AdministratorAccess",
+          "Read to that bucket only",
+          "Full access to every service",
+          "A shared root credential"
+        ],
+        "correct": 1,
+        "explanation": "Scope permissions to the smallest resource and action set."
+      },
+      "tip": "Backups are only credible after restore tests; availability is not the same as backup.",
+      "order": 30,
+      "xp": 180,
+      "minutes": 15,
+      "isBoss": true,
+      "sources": [
+        "https://learn.microsoft.com/en-us/training/paths/azure-fundamentals-describe-cloud-concepts/"
+      ],
+      "objective": "Explain least privilege and apply it in a practical workflow.",
+      "takeaways": [
+        "Least privilege: Grant only the specific permissions needed for a task.",
+        "Availability zone: A distinct infrastructure failure domain within a region, provider-specific details vary.",
+        "Recovery point objective: Maximum tolerable amount of data loss expressed as time."
+      ],
+      "questStory": "Mission 30: Your team needs you to apply identity, resilience, and backups safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "platform-1",
+      "world": "platform",
+      "number": 1,
+      "title": "AWS architecture primitives",
+      "summary": "Understand how EC2, S3, VPC, and IAM fit together: compute runs workloads, storage preserves objects, networking defines reachability, identity authorizes access.",
+      "example": "aws configure list",
+      "lab": {
+        "prompt": "Show where the AWS CLI configuration would be read from, without exposing keys.",
+        "answer": "aws configure list",
+        "hint": "List the AWS configuration sources."
+      },
+      "concepts": [
+        {
+          "term": "EC2",
+          "definition": "AWS virtual compute instances for configurable operating-system workloads."
+        },
+        {
+          "term": "S3",
+          "definition": "AWS object storage for buckets and objects."
+        },
+        {
+          "term": "IAM",
+          "definition": "AWS service for managing users, roles, and access policies."
+        }
+      ],
+      "scenario": {
+        "question": "A workload running on EC2 must access S3. Preferred authentication?",
+        "options": [
+          "Hardcode an access key",
+          "Attach a least-privilege IAM role",
+          "Share root login",
+          "Disable bucket authorization"
+        ],
+        "correct": 1,
+        "explanation": "Instance role credentials avoid stored long-lived secrets."
+      },
+      "tip": "Do not upload access keys, .env files, or local credential files to GitHub.",
+      "order": 31,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "objective": "Explain ec2 and apply it in a practical workflow.",
+      "takeaways": [
+        "EC2: AWS virtual compute instances for configurable operating-system workloads.",
+        "S3: AWS object storage for buckets and objects.",
+        "IAM: AWS service for managing users, roles, and access policies."
+      ],
+      "questStory": "Mission 31: Your team needs you to apply aws architecture primitives safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "platform-2",
+      "world": "platform",
+      "number": 2,
+      "title": "Compare Azure and Google Cloud",
+      "summary": "Product names differ, but core primitives align: Azure VMs and GCE VMs, Azure Blob and Cloud Storage, Azure VNet and Google Cloud VPC. Understand scopes and operational differences.",
+      "example": "az version",
+      "lab": {
+        "prompt": "Display the installed Azure CLI version.",
+        "answer": "az version",
+        "hint": "Use Azure CLI version command."
+      },
+      "concepts": [
+        {
+          "term": "Azure Virtual Network",
+          "definition": "Azure private IP networking primitive for subnets and attached resources."
+        },
+        {
+          "term": "Google Cloud VPC",
+          "definition": "GCP virtual networking primitive; VPC networks are global in scope."
+        },
+        {
+          "term": "Azure Blob Storage",
+          "definition": "Azure managed object storage for unstructured data."
+        }
+      ],
+      "scenario": {
+        "question": "What is Google Cloud’s main object-storage service?",
+        "options": [
+          "Cloud Storage",
+          "Compute Engine",
+          "Cloud DNS",
+          "Cloud Run"
+        ],
+        "correct": 0,
+        "explanation": "Cloud Storage holds bucket-based objects in GCP."
+      },
+      "tip": "Similar service names do not imply identical limits, routing models, or pricing.",
+      "order": 32,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "objective": "Explain azure virtual network and apply it in a practical workflow.",
+      "takeaways": [
+        "Azure Virtual Network: Azure private IP networking primitive for subnets and attached resources.",
+        "Google Cloud VPC: GCP virtual networking primitive; VPC networks are global in scope.",
+        "Azure Blob Storage: Azure managed object storage for unstructured data."
+      ],
+      "questStory": "Mission 32: Your team needs you to apply compare azure and google cloud safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "platform-3",
+      "world": "platform",
+      "number": 3,
+      "title": "Infrastructure as code",
+      "summary": "Declare infrastructure in versioned files instead of clicking environments into drift. Preview changes, review plans, store state securely, and separate environments.",
+      "example": "terraform version",
+      "lab": {
+        "prompt": "Check the installed Terraform version without contacting a provider.",
+        "answer": "terraform version",
+        "hint": "Use terraform version."
+      },
+      "concepts": [
+        {
+          "term": "Infrastructure as code",
+          "definition": "Management of infrastructure using machine-readable desired-state definitions."
+        },
+        {
+          "term": "Terraform plan",
+          "definition": "Preview of infrastructure changes before an apply, based on state and configuration."
+        },
+        {
+          "term": "State file",
+          "definition": "Mapping of managed real-world resources to infrastructure declarations; may contain secrets."
+        }
+      ],
+      "scenario": {
+        "question": "Why review a plan before terraform apply?",
+        "options": [
+          "To see intended changes and potential deletion",
+          "To speed up DNS automatically",
+          "To hide resource costs",
+          "To generate passwords in chat"
+        ],
+        "correct": 0,
+        "explanation": "The plan surfaces additions, updates, and destroys for approval."
+      },
+      "tip": "Treat state as sensitive; configure locked, access-controlled remote storage.",
+      "order": 33,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "objective": "Explain infrastructure as code and apply it in a practical workflow.",
+      "takeaways": [
+        "Infrastructure as code: Management of infrastructure using machine-readable desired-state definitions.",
+        "Terraform plan: Preview of infrastructure changes before an apply, based on state and configuration.",
+        "State file: Mapping of managed real-world resources to infrastructure declarations; may contain secrets."
+      ],
+      "questStory": "Mission 33: Your team needs you to apply infrastructure as code safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "platform-4",
+      "world": "platform",
+      "number": 4,
+      "title": "CI/CD and registries",
+      "summary": "A pipeline tests source, builds artifacts, scans dependencies, and deploys a known image digest. Use protected environments and short-lived identity federation where supported.",
+      "example": "git tag --list",
+      "lab": {
+        "prompt": "List release tags in the current repository.",
+        "answer": "git tag --list",
+        "hint": "Use git tag to list tags."
+      },
+      "concepts": [
+        {
+          "term": "Continuous integration",
+          "definition": "Frequent changes validated through automated builds and tests."
+        },
+        {
+          "term": "Continuous delivery",
+          "definition": "Keeping changes deployable after validated checks and approvals."
+        },
+        {
+          "term": "Artifact provenance",
+          "definition": "Evidence describing where and how an artifact was built."
+        }
+      ],
+      "scenario": {
+        "question": "Your team must reproduce exactly what passed tests. Deploy by:",
+        "options": [
+          "Mutable latest tag",
+          "Immutable image digest",
+          "Random container name",
+          "Build anew on the production host"
+        ],
+        "correct": 1,
+        "explanation": "Digest pinning ties deployment to the same content-addressed image."
+      },
+      "tip": "Separate build-time privileges from production deployment rights.",
+      "order": 34,
+      "xp": 100,
+      "minutes": 15,
+      "isBoss": false,
+      "sources": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "objective": "Explain continuous integration and apply it in a practical workflow.",
+      "takeaways": [
+        "Continuous integration: Frequent changes validated through automated builds and tests.",
+        "Continuous delivery: Keeping changes deployable after validated checks and approvals.",
+        "Artifact provenance: Evidence describing where and how an artifact was built."
+      ],
+      "questStory": "Mission 34: Your team needs you to apply ci/cd and registries safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "platform-5",
+      "world": "platform",
+      "number": 5,
+      "title": "Monitoring, reliability, and costs",
+      "summary": "Instrument logs, metrics, and traces around user outcomes. Set alerts on symptoms, estimate spend before provisioning, and use quotas, budgets, and tagging.",
+      "example": "docker system df",
+      "lab": {
+        "prompt": "Display local Docker disk usage by image, container, and volume type.",
+        "answer": "docker system df",
+        "hint": "Use docker system df to inspect local consumption."
+      },
+      "concepts": [
+        {
+          "term": "SLO",
+          "definition": "A measurable service-level objective, such as successful-request percentage."
+        },
+        {
+          "term": "Metrics",
+          "definition": "Aggregated numerical measurements tracked over time."
+        },
+        {
+          "term": "Cloud budget alert",
+          "definition": "Notification when forecast or actual spend crosses a chosen threshold."
+        }
+      ],
+      "scenario": {
+        "question": "A dashboard shows 99% CPU but users see no impact. What alert is more actionable?",
+        "options": [
+          "User-facing error-rate or latency SLO burn",
+          "Every CPU spike regardless of effect",
+          "New commit count",
+          "Number of README lines"
+        ],
+        "correct": 0,
+        "explanation": "User-impact signals tend to better distinguish incidents from benign load."
+      },
+      "tip": "Cloud free tiers have limits: create budget alerts before hands-on resource labs.",
+      "order": 35,
+      "xp": 180,
+      "minutes": 15,
+      "isBoss": true,
+      "sources": [
+        "https://docs.aws.amazon.com/"
+      ],
+      "objective": "Explain slo and apply it in a practical workflow.",
+      "takeaways": [
+        "SLO: A measurable service-level objective, such as successful-request percentage.",
+        "Metrics: Aggregated numerical measurements tracked over time.",
+        "Cloud budget alert: Notification when forecast or actual spend crosses a chosen threshold."
+      ],
+      "questStory": "Mission 35: Your team needs you to apply monitoring, reliability, and costs safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "security-1",
+      "world": "security",
+      "number": 1,
+      "title": "Container attack surfaces",
+      "summary": "Reduce privileges at build and runtime: non-root users, read-only filesystems, limited capabilities, resource limits, and separation of untrusted workloads.",
+      "example": "docker inspect --format \"{{.Config.User}}\" academy:v1",
+      "lab": {
+        "prompt": "Inspect the configured image runtime user.",
+        "answer": "docker inspect --format \"{{.Config.User}}\" academy:v1",
+        "hint": "Use docker inspect with format for Config.User."
+      },
+      "concepts": [
+        {
+          "term": "Rootless container",
+          "definition": "Container engine or workload operating without host root privileges, according to its mode."
+        },
+        {
+          "term": "Read-only root filesystem",
+          "definition": "Runtime control reducing writes to the container root filesystem."
+        },
+        {
+          "term": "Linux capability",
+          "definition": "Granular privilege flag that can be removed when unnecessary."
+        }
+      ],
+      "scenario": {
+        "question": "Which setting commonly reduces damage from container compromise?",
+        "options": [
+          "--privileged",
+          "Non-root user and dropped capabilities",
+          "Mount host Docker socket",
+          "Host PID namespace"
+        ],
+        "correct": 1,
+        "explanation": "Limiting privileges makes host access harder after compromise."
+      },
+      "tip": "Never casually mount /var/run/docker.sock into arbitrary application containers.",
+      "order": 36,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/security/"
+      ],
+      "objective": "Explain rootless container and apply it in a practical workflow.",
+      "takeaways": [
+        "Rootless container: Container engine or workload operating without host root privileges, according to its mode.",
+        "Read-only root filesystem: Runtime control reducing writes to the container root filesystem.",
+        "Linux capability: Granular privilege flag that can be removed when unnecessary."
+      ],
+      "questStory": "Mission 36: Your team needs you to apply container attack surfaces safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "security-2",
+      "world": "security",
+      "number": 2,
+      "title": "Supply chain and SBOMs",
+      "summary": "Software may be compromised in source, dependencies, build tools, registries, or deployment. Generate an SBOM, scan images, and verify signatures or attestations.",
+      "example": "docker image ls --digests",
+      "lab": {
+        "prompt": "List local image tags and digests where available.",
+        "answer": "docker image ls --digests",
+        "hint": "List image digests with docker image ls."
+      },
+      "concepts": [
+        {
+          "term": "SBOM",
+          "definition": "Software bill of materials listing components and dependencies in an artifact."
+        },
+        {
+          "term": "Signature",
+          "definition": "Cryptographic proof binding artifact content to a signer or key identity."
+        },
+        {
+          "term": "Vulnerability scanning",
+          "definition": "Checking packages/components against known advisory databases."
+        }
+      ],
+      "scenario": {
+        "question": "An image tag is repointed after tests. What helps you deploy the tested artifact?",
+        "options": [
+          "Pin content digest",
+          "Rely on latest",
+          "Turn off checks",
+          "Run as root"
+        ],
+        "correct": 0,
+        "explanation": "A digest identifies exact image content instead of a mutable label."
+      },
+      "tip": "A clean scan is not a guarantee of safety; exploitability and configuration also matter.",
+      "order": 37,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/security/"
+      ],
+      "objective": "Explain sbom and apply it in a practical workflow.",
+      "takeaways": [
+        "SBOM: Software bill of materials listing components and dependencies in an artifact.",
+        "Signature: Cryptographic proof binding artifact content to a signer or key identity.",
+        "Vulnerability scanning: Checking packages/components against known advisory databases."
+      ],
+      "questStory": "Mission 37: Your team needs you to apply supply chain and sboms safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "security-3",
+      "world": "security",
+      "number": 3,
+      "title": "Secure GitHub Actions",
+      "summary": "Pull-request input, third-party actions, and tokens can expose CI. Use minimum permissions, review external actions, avoid untrusted code with privileged contexts, and protect deploy environments.",
+      "example": "git grep -n \"permissions:\" -- .github/workflows",
+      "lab": {
+        "prompt": "Find declared permissions keys within tracked GitHub workflows.",
+        "answer": "git grep -n \"permissions:\" -- .github/workflows",
+        "hint": "Search for permissions in the workflow directory."
+      },
+      "concepts": [
+        {
+          "term": "OIDC federation",
+          "definition": "Short-lived identity exchange used to obtain cloud credentials without static secrets."
+        },
+        {
+          "term": "permissions key",
+          "definition": "Workflow/job setting restricting scope of GITHUB_TOKEN rights."
+        },
+        {
+          "term": "Protected environment",
+          "definition": "Deployment gate requiring configured approvals or branch restrictions."
+        }
+      ],
+      "scenario": {
+        "question": "A public fork submits a PR. Safest CI principle?",
+        "options": [
+          "Expose production tokens during tests",
+          "Run untrusted code without privileged secrets",
+          "Skip review for workflow edits",
+          "Use write-all permissions"
+        ],
+        "correct": 1,
+        "explanation": "Untrusted PR code should never inherit high-impact credentials."
+      },
+      "tip": "Carefully review changes to workflow YAML itself; it can alter what CI executes.",
+      "order": 38,
+      "xp": 100,
+      "minutes": 10,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/security/"
+      ],
+      "objective": "Explain oidc federation and apply it in a practical workflow.",
+      "takeaways": [
+        "OIDC federation: Short-lived identity exchange used to obtain cloud credentials without static secrets.",
+        "permissions key: Workflow/job setting restricting scope of GITHUB_TOKEN rights.",
+        "Protected environment: Deployment gate requiring configured approvals or branch restrictions."
+      ],
+      "questStory": "Mission 38: Your team needs you to apply secure github actions safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "security-4",
+      "world": "security",
+      "number": 4,
+      "title": "Respond to a bad deployment",
+      "summary": "Incidents reward disciplined observation: verify impact, stop additional changes, rollback or mitigate, preserve evidence, communicate, and learn with a blameless review.",
+      "example": "kubectl rollout status deployment/web",
+      "lab": {
+        "prompt": "Check rollout progress for a Kubernetes Deployment named web.",
+        "answer": "kubectl rollout status deployment/web",
+        "hint": "Use rollout status with a Deployment name."
+      },
+      "concepts": [
+        {
+          "term": "Rollback",
+          "definition": "Return a system to a previously known-good release or state."
+        },
+        {
+          "term": "Incident timeline",
+          "definition": "Time-ordered record of observed symptoms, actions, and decisions."
+        },
+        {
+          "term": "Postmortem",
+          "definition": "Review of contributing factors and preventive improvements after resolution."
+        }
+      ],
+      "scenario": {
+        "question": "Deploy introduced widespread 5xx errors. Sensible first mitigation?",
+        "options": [
+          "Rollback known-good release",
+          "Rotate every user password blindly",
+          "Delete logs",
+          "Merge more PRs immediately"
+        ],
+        "correct": 0,
+        "explanation": "An available known-good rollback limits impact while investigation continues."
+      },
+      "tip": "Preserve evidence and communication notes; remediation should not destroy clues unnecessarily.",
+      "order": 39,
+      "xp": 100,
+      "minutes": 15,
+      "isBoss": false,
+      "sources": [
+        "https://docs.docker.com/security/"
+      ],
+      "objective": "Explain rollback and apply it in a practical workflow.",
+      "takeaways": [
+        "Rollback: Return a system to a previously known-good release or state.",
+        "Incident timeline: Time-ordered record of observed symptoms, actions, and decisions.",
+        "Postmortem: Review of contributing factors and preventive improvements after resolution."
+      ],
+      "questStory": "Mission 39: Your team needs you to apply respond to a bad deployment safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    },
+    {
+      "id": "security-5",
+      "world": "security",
+      "number": 5,
+      "title": "Final boss: ship safely",
+      "summary": "Combine Git history, reviewed CI, immutable container images, least-privilege cloud access, runtime checks, and recovery into a repeatable delivery system.",
+      "example": "git status --short",
+      "lab": {
+        "prompt": "Before shipping, confirm the working tree has no unexpected modifications.",
+        "answer": "git status --short",
+        "hint": "Use git status with the short flag."
+      },
+      "concepts": [
+        {
+          "term": "Defense in depth",
+          "definition": "Independent safeguards across identity, build, network, runtime, and recovery."
+        },
+        {
+          "term": "Immutable deployment",
+          "definition": "Releasing a content-addressed artifact rather than modifying a running instance."
+        },
+        {
+          "term": "Disaster recovery test",
+          "definition": "Controlled exercise proving systems and data can be restored after failure."
+        }
+      ],
+      "scenario": {
+        "question": "Which production launch plan is strongest?",
+        "options": [
+          "Push latest, root account, no rollback",
+          "Reviewed PR, passing CI, pinned digest, minimal IAM, rollback plan",
+          "Disable alerts for launch",
+          "Give all developers root keys"
+        ],
+        "correct": 1,
+        "explanation": "Reliable delivery couples reproducibility, least privilege, checks, and recovery."
+      },
+      "tip": "Winning means explaining the why, not only memorizing commands.",
+      "order": 40,
+      "xp": 180,
+      "minutes": 15,
+      "isBoss": true,
+      "sources": [
+        "https://docs.docker.com/security/"
+      ],
+      "objective": "Explain defense in depth and apply it in a practical workflow.",
+      "takeaways": [
+        "Defense in depth: Independent safeguards across identity, build, network, runtime, and recovery.",
+        "Immutable deployment: Releasing a content-addressed artifact rather than modifying a running instance.",
+        "Disaster recovery test: Controlled exercise proving systems and data can be restored after failure."
+      ],
+      "questStory": "Mission 40: Your team needs you to apply final boss: ship safely safely. Read the intel, validate your choice, and enter the required command in the simulated terminal."
+    }
+  ]
+}

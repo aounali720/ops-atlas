@@ -1,0 +1,340 @@
+/*
+ * OPS ATLAS / FIELD MANUAL
+ * Art direction: field-journal typography, charcoal ink, expedition orange,
+ * warm technical paper, crisp instrument lines. No external fonts/assets.
+ * Preserves the existing app's layout and accessible interaction model.
+ */
+:root {
+  --field-bg:#121a18;
+  --field-surface:#1a2421;
+  --field-raised:#202c28;
+  --field-line:#34433c;
+  --field-text:#f2f0e7;
+  --field-muted:#a7b6ad;
+  --field-dim:#798d82;
+  --field-paper:#efede2;
+  --field-orange:#ed6a45;
+  --field-ochre:#efbe7d;
+  --field-green:#9bc6ae;
+  font-family:"Aptos","Helvetica Neue",Arial,sans-serif;
+  color:var(--field-text);
+  background:var(--field-bg);
+  font-synthesis:none;
+}
+html{background:var(--field-bg)}
+body{background:var(--field-bg);color:var(--field-text)}
+::selection{background:var(--field-orange);color:#17211e}
+:focus-visible{outline:3px solid #f3ba74;outline-offset:3px}
+h1,h2,h3{letter-spacing:-.048em;font-family:"Arial Narrow","Aptos Display","Helvetica Neue",Arial,sans-serif}
+p{line-height:1.62}
+button{transition:background-color .17s,border-color .17s,color .17s,transform .17s}
+.app-shell{background:var(--field-bg) !important}
+.content-shell{background:var(--field-bg)}
+/* The two materials: uncoated paper navigation and dark instrument work surface */
+.sidebar{background:var(--field-paper);border-right:1px solid #d6d1c2;padding:28px 14px 22px;flex-basis:252px;scrollbar-color:#c0bbad transparent}
+.brand{gap:12px;margin:1px 0 45px;padding:0 9px;color:#17211e}
+.brand-emblem{border-radius:2px;height:41px;width:41px;background:var(--field-orange);border:1px solid #bd5133;color:#1c2924;transform:rotate(-6deg)}
+.brand-emblem svg{transform:rotate(6deg)}
+.brand-zap{color:#17211e !important}
+.brand b{font-family:"Arial Narrow","Helvetica Neue",Arial,sans-serif;font-size:18px;font-weight:950;letter-spacing:-.058em;color:#14211d}
+.brand b span{color:#14211d}
+.brand small{font-size:9px;letter-spacing:.125em;color:#867f70;font-family:Consolas,"Courier New",monospace}
+.sidebar-heading{padding:0 13px 9px;margin-bottom:8px;border-bottom:1px solid #d4cec0;color:#797367;letter-spacing:.12em;font:700 10px/1.4 Consolas,monospace}
+.worlds-heading{margin-top:34px}
+.nav-list,.world-nav{gap:2px}
+.nav-item,.world-nav-item{color:#49574f;border-radius:3px;gap:11px;font-weight:720;min-height:43px;font-size:12px;padding:11px 13px}
+.nav-item svg,.world-nav-item svg{stroke-width:1.9}
+.nav-item:hover,.world-nav-item:hover,.world-nav-item.selected{background:#e0ddd0;color:#17211e}
+.nav-item.active{background:#1c2b25;color:#f4eee1;box-shadow:none}
+.nav-item.active:before{content:"";width:5px;height:5px;display:block;background:#ec6c45;transform:rotate(45deg);margin-left:-6px}
+.nav-item.active svg{color:#f5ae8c}
+.nav-count{border-radius:2px;color:#efede2;background:#d05d3a;font-family:Consolas,monospace}
+.world-nav-item{min-height:39px;font-size:11px;padding:8px 10px;gap:9px}
+.world-dot{height:24px;width:24px;flex-basis:24px;border-radius:2px;background:#e0dfd3 !important;color:#34453c !important}
+.world-ratio{font:700 10px Consolas,monospace;color:#777e6f}
+.pilot-card{background:#e3dfd1;border:1px solid #cfcbba;border-radius:3px;padding:11px}
+.pilot-avatar{background:#172b24;border-radius:2px;color:#f8e6b3}
+.pilot-copy strong{color:#1e2c25;font-weight:850}
+.pilot-copy small{color:#687168}
+.pilot-track{background:#cacbbb;border-radius:0}
+.pilot-track span{background:#df6745}
+.sidebar-foot{color:#867f71}
+.online-dot{background:#7b967f;box-shadow:none}
+.topbar{background:#17201d;border-bottom:1px solid #34423c;backdrop-filter:none;height:68px}
+.breadcrumb{color:#ed966e;letter-spacing:.1em;font:700 10px Consolas,monospace}
+.breadcrumb-current{color:#ebe9e1;font-size:12px;font-weight:750}
+.top-pill{background:#1b2823;border:1px solid #3d5046;color:#dddfd3;border-radius:3px;font:700 10px Consolas,monospace;padding:8px 11px}
+.stat-pill:hover{background:#2a3932;border-color:#9da58c;transform:none}
+.top-xp{color:#ffdbad;background:#333226;border-color:#544736}
+.avatar-button{background:#ed6a45;color:#17211d;border:1px solid #eb8a62;border-radius:2px}
+.main-view{max-width:1480px;padding-top:33px}
+.site-footer{border-top:1px solid var(--field-line);color:#8b9b92;font:10px Consolas,monospace}
+.toast{background:#263831;border:1px solid #759784;border-radius:3px;color:#e8f3e4}
+.toast button{color:#f5b585}
+/* Typographic scale: understated technical metadata, very bold magazine headings */
+.eyebrow,.micro-label{font:750 10px/1.3 Consolas,"Courier New",monospace !important;letter-spacing:.12em;color:#eea17a}
+.micro-label{font-size:10px !important}
+.welcome-line{color:#c8cbbd;font:750 11px Consolas,monospace;letter-spacing:.13em;margin-bottom:14px}
+.little-star{color:var(--field-orange)}
+.update-text{color:#809588}
+.section-heading{margin:44px 0 17px;border-bottom:1px solid #425047;padding-bottom:15px;align-items:end}
+.section-heading h2{font-size:clamp(24px,2.25vw,31px);font-weight:850;letter-spacing:-.045em;margin-top:5px;color:#f4eee4}
+.section-heading .eyebrow{color:#ee9b74}
+.muted{color:#a6b3a8}
+.small{color:#93a59a}
+/* Lead feature: a designed printed engineering chart, not a floating orb */
+.hero{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(300px,.94fr);gap:10px;align-items:center;position:relative;min-height:455px;border:1px solid #f28b63;background:#ed6a45;border-radius:5px;padding:33px 34px 31px 42px;box-shadow:none}
+.hero:before{display:none}
+.hero:after{content:"SB — 001";position:absolute;right:15px;bottom:10px;font:700 10px Consolas,monospace;color:#53352b;letter-spacing:.13em}
+.hero-body{max-width:none;min-width:0}
+.hero-label{display:flex;gap:9px;align-items:center;flex-wrap:wrap;color:#26302a;border:0;background:transparent;border-radius:0;padding:0 0 12px;margin:0 0 22px;border-bottom:1px solid #9d4a3555;font:800 10px/1.3 Consolas,monospace;letter-spacing:.08em}
+.hero-indicator{height:8px;width:8px;display:inline-block;background:#1c2e26;transform:rotate(45deg)}
+.hero-edition{margin-left:auto;color:#633e32;font-size:9px}
+.hero h1{font-family:"Arial Narrow","Aptos Display","Helvetica Neue",Arial,sans-serif;color:#18261f;font-size:clamp(40px,4.85vw,75px);line-height:.96;letter-spacing:-.07em;font-weight:950;max-width:690px;margin:0 0 24px}
+.hero h1 em{display:inline-block;color:#f7e8c7;font-style:normal;background:#1b2b23;-webkit-text-fill-color:currentColor;padding:4px 12px 10px 7px;margin:6px 0 0 -5px;transform:rotate(-1deg);box-shadow:5px 5px 0 #a94b32}
+.hero p{font-size:14px;font-weight:530;color:#2b3730;max-width:460px;line-height:1.65;margin:0 0 26px}
+.hero-actions{gap:9px}
+.btn-primary,.btn-glass,.btn-outline,.text-link,.danger-button{border-radius:3px;font-size:12px;font-weight:850;letter-spacing:-.01em;min-height:43px}
+.btn-primary{background:#ed704c;color:#17231d;border:1px solid #ed704c}
+.btn-primary:hover:not(:disabled){background:#ff8a65;border-color:#ff8a65;transform:translateY(-1px)}
+.btn-primary:disabled{opacity:.45}
+.btn-glass,.btn-outline{background:#1c2924;border:1px solid #455a4b;color:#edece0}
+.btn-glass:hover,.btn-outline:hover{background:#35483c;border-color:#7b907b}
+.text-link{background:none;color:#f2ab83;padding:4px;min-height:auto}
+.text-link:hover{color:#f7d3b9}
+.hero .btn-primary{background:#192921;border-color:#192921;color:#f4eee2;min-height:47px;padding:13px 21px}
+.hero .btn-primary:hover{background:#314339;border-color:#314339}
+.hero .btn-glass{color:#1c2d24;background:transparent;border:1px solid #703f31;min-height:47px;padding:13px 18px}
+.hero .btn-glass:hover{background:#c4573990}
+.hero-footnote{display:flex;align-items:center;gap:8px;margin-top:33px;color:#492f26;font:800 10px Consolas,monospace;white-space:nowrap}
+.hero-footnote i{width:25px;height:1px;background:#8b4837}
+.field-diagram{justify-self:stretch;align-self:stretch;display:flex;flex-direction:column;min-width:0;padding:12px 13px 10px;border:1px solid #8c4c3899;background:#da6242;box-shadow:8px 8px 0 #b9513630;transform:rotate(1.3deg)}
+.diagram-caption,.diagram-bottom{display:flex;align-items:center;justify-content:space-between;color:#193026;font:800 9px Consolas,monospace;letter-spacing:.10em}
+.diagram-cross{font-size:16px;letter-spacing:.3em}
+.diagram-svg{width:100%;flex:1;max-height:320px}
+.diagram-bottom{gap:5px;font-size:9px;border-top:1px solid #8c4c3885;padding:9px 4px 0;white-space:nowrap}
+/* Stats as numbered paper readouts */
+.kpi-grid{gap:1px;margin-top:20px;background:#38483e;border:1px solid #38483e;grid-template-columns:repeat(4,minmax(0,1fr))}
+.kpi{background:#e9e6d9;color:#202c25;border:0;border-radius:0;padding:23px 18px;align-items:flex-start;gap:16px}
+.kpi-icon{height:30px;width:30px;flex-basis:30px;color:#8c543a;background:transparent;border-right:1px solid #cabfaf;border-radius:0;padding-right:10px}
+.kpi-icon svg{height:20px;width:20px}
+.kpi strong{font-family:"Arial Narrow","Helvetica Neue",Arial,sans-serif;font-size:31px;font-weight:900;letter-spacing:-.065em;color:#1b2821}
+.kpi span:last-child{color:#617064;font:700 10px Consolas,monospace;line-height:1.5}
+/* Next assignment */
+.continue-panel{background:#213028;border:1px solid #4a5a4c;color:#f2f0e6;border-radius:4px;padding:25px;box-shadow:inset 4px 0 0 var(--field-orange)}
+.continue-panel:hover{background:#28392f;border-color:#81917c}
+.continue-mark{width:69px;height:69px;flex:0 0 69px;border-radius:2px;color:#f0dcc1 !important;background:#d36843 !important;font:900 31px/1 "Arial Narrow",Arial,sans-serif}
+.continue-copy h3{font-size:24px;color:#fff8ed;margin:6px 0}
+.continue-copy p{color:#b6c3b7;font-size:12px}
+.continue-action{color:#eebd82;font:800 10px Consolas,monospace}
+.round-arrow{border-radius:2px;background:#ed6a45;color:#1d2a23}
+/* Expedition index: deliberately square-edged archival cards */
+.world-grid{gap:10px}
+.world-card{min-height:292px;background:#1b2722;border:1px solid #39493d;border-radius:3px;padding:19px 18px 17px;overflow:hidden;color:#f7eee3;box-shadow:none}
+.world-card:after{content:"";height:44px;width:44px;border:1px solid #7a8d7760;position:absolute;right:-21px;top:91px;transform:rotate(45deg);pointer-events:none}
+.world-card:hover{transform:translateY(-3px);background:#24352a;border-color:#e09a72;box-shadow:4px 6px 0 #ee6b4426}
+.world-card-top{align-items:flex-start;border-bottom:1px solid #435347;padding-bottom:12px}
+.world-card-num{color:#e5a983;font:800 10px Consolas,monospace;letter-spacing:.09em}
+.world-status{color:#8fa397;font:700 9px Consolas,monospace;letter-spacing:.03em}
+.world-status.complete{color:#bed8b6}
+.world-big-icon{border:0;background:transparent;width:45px;height:54px;border-radius:0;justify-content:start;color:#eb754f !important;margin:18px 0 10px}
+.world-big-icon svg{height:36px;width:36px;stroke-width:1.4}
+.world-card h3{color:#f1eee5;font-size:19px;letter-spacing:-.03em;margin:0 0 7px}
+.world-card p{color:#9aada0;font-size:11px;line-height:1.62;margin:0 0 19px}
+.world-progress-label{color:#9bac9b;font:700 10px Consolas,monospace}
+.progress-track{height:4px;border-radius:0;background:#3a4c40}
+.progress-track>div{background:var(--field-orange);border-radius:0}
+.world-card .progress-track>div,.world-progress-overview .progress-track>div,.mastery-row .progress-track>div{background:#df865b !important}
+.dashboard-bottom{gap:10px;margin-top:20px}
+.prompt-panel,.review-panel{background:#1d2923;border:1px solid #3c4d40;border-radius:3px;padding:22px}
+.prompt-icon{border-radius:2px;color:#f6b188;background:#37483b}
+.prompt-panel h3,.review-panel h3{font-size:18px}
+.prompt-panel p,.review-panel p{color:#a8b9ad}
+.review-panel>svg{color:#f3bb8b}
+.review-panel b{color:#f3eee1}
+.square-btn,.icon-button{border-radius:2px;background:#35463a;color:#f2dfc6}
+/* World dossiers */
+.page-intro{border-bottom:1px solid #405249;padding-bottom:19px;margin-bottom:24px}
+.page-intro h1{font-size:clamp(36px,4vw,52px);letter-spacing:-.065em;color:#f6eee0}
+.page-intro p{color:#acbcb0;font-size:13px}
+.world-hero{background:#e7ddc9;border:1px solid #b9b19d;border-radius:4px;gap:24px;padding:32px;color:#26352b}
+.world-hero:before{opacity:.09;background-image:repeating-linear-gradient(0deg,transparent 0,transparent 20px,#1c3226 21px),repeating-linear-gradient(90deg,transparent 0,transparent 20px,#1c3226 21px);mask-image:none}
+.world-hero-icon{background:#de6c46 !important;border:0;border-radius:2px;color:#182a22 !important;height:87px;width:87px;flex-basis:87px}
+.difficulty-label{color:#ad5339;font:800 10px Consolas,monospace}
+.world-hero h1{color:#223027;font-size:clamp(31px,4vw,48px)}
+.world-hero p{color:#536457;line-height:1.7}
+.world-hero-bg{color:#2b4937;opacity:.12}
+.world-progress-overview span{color:#3b493f;font:750 10px Consolas,monospace}
+.world-switcher{gap:5px}
+.world-switcher button{width:38px;height:38px;background:#1c2a23;border:1px solid #496047;border-radius:2px;color:#c3d1be;font:800 12px Consolas,monospace}
+.world-switcher button:hover{background:#344837}
+.world-switcher button.selected{background:#ec6945;border-color:#ec6945;color:#1b2b23}
+.mission-list{gap:6px}
+.mission-item{background:#1b2722;border:1px solid #3b4c41;color:#f4f0e6;border-radius:3px;padding:18px 20px}
+.mission-item:hover:not(:disabled){background:#28382d;border-color:#e68a62}
+.mission-item.mission-locked{opacity:.55}
+.mission-number{background:#303e32;color:#f5cc9f;border:1px solid #6a735e;border-radius:2px}
+.mission-item.mission-done .mission-number{background:#3d5e46;border-color:#789b6d;color:#d0edc8}
+.mission-info strong{color:#f1ede0;font-size:17px}
+.mission-info>span:last-child{color:#a6b5a7;font-size:12px}
+.mission-end{color:#eab58b;font:750 11px Consolas,monospace}
+.mission-chevron{color:#f0b28b}
+.mission-item.boss-mission{background:#2b3026 !important;border-color:#9d7350 !important;box-shadow:inset 3px 0 #e77d4d !important}
+.boss-mission .mission-number{background:#b96a42;color:#f5e6d1;border-color:#c58d62}
+.world-tip,.cloud-warning{background:#25322a;border:1px solid #50624e;border-radius:3px;color:#bbc9bb}
+.world-tip svg,.cloud-warning svg{color:#f2b97e}
+.world-tip strong,.cloud-warning strong{color:#f6e4ca}
+/* The lesson layout is intentionally calmer and more readable than the game board */
+.lesson-crumb{color:#a3afa2}
+.lesson-crumb button{color:#ebb38e}
+.lesson-header{border-bottom:1px solid #435448;padding-bottom:24px}
+.lesson-header h1{color:#f2efe7;font-size:clamp(34px,3.4vw,50px)}
+.lesson-header p{color:#abb9ae}
+.lesson-icon{background:#ec6e441b !important;color:#ec835c !important;border-radius:3px !important}
+.lesson-metas{color:#bbc6b8}
+.bookmark-btn{background:#2a382d;border-color:#4b5847;border-radius:3px;color:#e9bc99}
+.lesson-section{background:#1b2822;border:1px solid #3b5041;border-radius:3px;padding:25px 27px}
+.lesson-section h2{color:#f2ecdc;font-size:22px}
+.lesson-section>p,.lesson-story{color:#b7c3b9;font-size:13px}
+.section-step{background:#de7148 !important;border-radius:2px;color:#1b2b21 !important}
+.objective-box,.warning-box,.finish-section{background:#29372d;border:1px solid #566b50;border-radius:3px;color:#d6e0d3}
+.objective-box svg,.warning-box svg{color:#ecab7d}
+.objective-box b{color:#f6e4ce}
+.objective-box p{color:#bfcebd}
+.concept-item{border-color:#384c3d}
+.concept-index{color:#eaa67d}
+.concept-item h3{color:#f2eee5}
+.concept-item p{color:#abb9ac}
+.code-reference,.terminal-window{background:#101916;border:1px solid #526657;border-radius:3px;box-shadow:none}
+.code-header,.terminal-top{background:#24362a;border-bottom:1px solid #3c5840;color:#d1e2d2}
+.code-reference pre,.terminal-screen{color:#d8edcf}
+.terminal-dollar,.terminal-success{color:#98d9a9}
+.terminal-inputline input{color:#f1efdc}
+.quiz-box{background:#1b2a23;border:1px solid #445647;border-radius:3px}
+.quiz-option,.arena-option{background:#26362b;border:1px solid #50644f;color:#e1e9db;border-radius:3px}
+.quiz-option:hover:not(:disabled),.arena-option:hover:not(:disabled),.arena-option.selected{background:#3b4d38;border-color:#dea67b}
+.quiz-option.correct,.arena-option.correct{background:#304f3a;border-color:#91b998}
+.quiz-option.wrong,.arena-option.wrong{background:#543a30;border-color:#dd9375}
+.quiz-option .answer-letter,.arena-option span{background:#3b4a39;color:#f6dcc2;border-radius:2px}
+.answer-explain{background:#293b2d;border-color:#557052;color:#e0ebd9}
+.quiz-results,.exam-result{border-radius:3px}
+.finish-section .btn-primary{color:#203026}
+.lesson-side .side-box,.source-card{border:1px solid #425643;background:#1b2823;border-radius:3px;color:#c9d2c4}
+.side-title{color:#f0b086}
+.side-step,.takeaway p{color:#aebbac}
+.takeaway{border-color:#3d5142}
+.source-card b{color:#f7e4c9}
+/* Quiz and spaced repetition as tangible index cards */
+.feature-toolbar{border:1px solid #465849;border-radius:3px;background:#25342a}
+.select-wrap{border:1px solid #60715a;background:#19291f;color:#ecc3a2;border-radius:3px}
+.select-wrap select{color:#f1f0e4}
+.select-wrap select option{background:#1c2821}
+.toggle-line,.toolbar-stat{color:#c1cbbd}
+.toggle-line input{accent-color:#ed754e}
+.card-progress-line,.study-card-head,.study-card-footer{color:#b2bdad}
+.study-card,.study-card.flipped{background:#e9e3d4;color:#243028;border:1px solid #aeaa95;border-radius:3px;min-height:320px}
+.study-card:before{border:1px solid #75887944;box-shadow:0 0 0 30px #75887912,0 0 0 60px #75887910}
+.study-card.flipped{background:#d7e3d3;border-color:#9bae9a}
+.study-card-head,.study-card-footer{color:#646e5f}
+.study-card-center h2{color:#243028;font-size:clamp(24px,2.7vw,39px)}
+.study-card-subtitle{color:#637363}
+.card-grades button{border-radius:3px;background:#303f32;color:#e9ead9}
+.card-grades .grade-again{background:#5f3e32;border-color:#ae6a53}
+.card-grades .grade-good{background:#3b6249;border-color:#739b7c}
+.card-grades button small{color:#c4cdbe}
+.flashcard-help p,.flashcard-note{color:#abbaa9}
+.empty-state{background:#1c2b21;border:1px dashed #6b806b;border-radius:3px}
+.empty-state p{color:#abbbae}
+.arena-question{background:#1b2822;border:1px solid #455d46;border-radius:3px}
+.arena-question-top{color:#ebac82}
+.arena-option-grid{gap:8px}
+.arena-explanation{border-color:#55705b;color:#c9ddc9}
+.exam-end{background:#26342b;border-radius:3px;border:1px solid #6f8269;backdrop-filter:none}
+.exam-end span{color:#d7decf}
+.exam-result{background:#59382e;border-color:#8d5745}
+.exam-result.exam-passed{background:#2e4939;border-color:#6d966f}
+.exam-result p{color:#d2dfd0}
+/* Rewards remain game-like, but use a ledger instead of casino gradients */
+.quest-strip{background:#222f25;border:1px solid #596d4f;border-left:4px solid #ed714b;border-radius:3px;box-shadow:none;padding:19px 22px}
+.quest-flame{background:#ee704824;border:1px solid #b47b58;border-radius:2px;color:#f6ab78;box-shadow:none}
+.quest-strip h3{color:#f1ebdf;font-size:20px}
+.quest-strip p{color:#b0beaf}
+.quest-mini-tracks span{border-radius:0;background:#475647;border-color:#5a6b57}
+.quest-mini-tracks span.ready{background:#e6a871;border-color:#e6a871}
+.quest-mini-tracks span.claimed{background:#a5caa9;border-color:#a5caa9}
+.quest-banner{border:1px solid #c1b18e;border-radius:3px;background:#e6ddc8;color:#243229}
+.quest-banner:after{content:"//";font-size:130px;color:#9e9d7c20;top:-65px}
+.quest-banner-icon{background:#d46a47;border:1px solid #bd5a3b;border-radius:3px;color:#2b3527;box-shadow:none}
+.quest-banner h2,.quest-banner-score strong{color:#23322a}
+.quest-banner p{color:#637568}
+.quest-banner-score{background:#d8ceba;border:1px solid #b7aa90;border-radius:3px}
+.quest-banner-score span{color:#5a6a5b}
+.quest-card,.vault-card{background:#1d2923;border:1px solid #475d4a;border-radius:3px;box-shadow:none}
+.quest-card.quest-claimed,.vault-card.vault-equipped{background:#284033;border-color:#769c77}
+.quest-card h3,.vault-card h3{color:#f5eee1;font-size:22px}
+.quest-card p,.vault-card p{color:#adbbac}
+.quest-icon{border:1px solid #a88369;border-radius:2px;background:#653b2b;color:#f3b587}
+.quest-card:nth-child(2) .quest-icon{background:#254c43;border-color:#4b927c;color:#a1d3bd}
+.quest-card:nth-child(3) .quest-icon{background:#5c4d2c;border-color:#aa8e50;color:#f0d29d}
+.quest-count b{color:#f3ecdc}
+.quest-count span{color:#a8b9a8}
+.quest-rewards{color:#efba86}
+.quest-next-steps,.vault-hint{border:1px solid #506752;border-radius:3px;background:#1f3026}
+.quest-next-steps p{color:#abbbae}
+.quest-footnote{color:#98aa9c}
+.vault-wallet{background:#e8ddc5;border:1px solid #c7b490;border-radius:3px;min-height:143px;color:#29352a}
+.vault-wallet-icon{background:#d8734a;border:1px solid #ae6647;border-radius:3px;color:#253126}
+.vault-wallet h2{color:#28372c;font-size:36px}
+.vault-wallet .micro-label{color:#a35f40}
+.vault-wallet p{color:#576759}
+.vault-wallet-art{color:#31463315}
+.vault-symbol{border-radius:2px;background:#2a3d30;font-size:60px}
+.vault-title{color:#f5b58c}
+.vault-card-footer{border-color:#4a604a}
+.vault-card-footer>span{color:#efbd82}
+.vault-card-footer button{border-radius:2px}
+.victory-modal{border-radius:5px;background:#e7dfcd;border:1px solid #c8b498;color:#293629}
+.victory-modal h2{color:#253329}
+.victory-modal>p{color:#677768}
+.victory-medal{border-radius:3px;background:#de7149;border-color:#c26544;box-shadow:7px 7px 0 #c9bfa6;color:#2b382b}
+.victory-loot>div{background:#28392f;border:1px solid #6c8065;border-radius:2px;color:#f3bf90}
+.victory-loot strong{color:#f4e8d1}
+.victory-modal .eyebrow{color:#a6523a}
+.victory-particles span{color:#c86e48}
+.victory-backdrop{background:#0c1611dd}
+/* Achievements / archive / reading tools */
+.profile-banner{background:#e8dfcb;color:#29362d;border:1px solid #adad94;border-radius:3px}
+.profile-emblem{background:#d6704a;color:#1b2820;border-radius:2px}
+.profile-banner h2{color:#27362b;font-size:32px}
+.profile-banner p{color:#637366}
+.profile-banner .eyebrow{color:#b56343}
+.profile-level{color:#b6603d}
+.badge-card{background:#1b2921;border:1px solid #40563f;border-radius:3px}
+.badge-card.unlocked{background:#283b2b;border-color:#80906c}
+.badge-medallion{background:#334234;border-color:#5c7159;color:#a2b5a1;border-radius:3px}
+.unlocked .badge-medallion{background:#704c32;border-color:#e1a974;color:#ffd0a2;box-shadow:none}
+.badge-card h3{color:#f5eee3}
+.badge-card p{color:#b0bdac}
+.mastery-list{background:#1b2a22;border:1px solid #455846;border-radius:3px}
+.mastery-row{border-color:#3b4c3a}
+.mastery-row b{color:#d0d8c8}
+.search-control{background:#203027;border:1px solid #506450;border-radius:3px;color:#d3bdab}
+.search-control input{color:#f5ede1}
+.resource-item,.guide-grid>div,.data-panel{background:#1b2922;border:1px solid #455748;border-radius:3px}
+.resource-item:hover{border-color:#f3a47d;transform:translateY(-2px)}
+.resource-top{color:#f2b893}
+.resource-item p,.guide-grid p,.data-panel p{color:#adbeae}
+.resource-visit{color:#eab080}
+.guide-num{color:#eda679}
+.danger-button{background:#54392e;border-color:#9d5f47;color:#ffd9ca}
+.source-card{color:#e4c6ab}
+@media(max-width:1330px){.hero{grid-template-columns:minmax(0,1fr) minmax(250px,.8fr);padding:30px}.hero h1{font-size:clamp(40px,4.5vw,62px)}.field-diagram{max-height:355px}.sidebar{flex-basis:233px}.main-view{padding-left:clamp(20px,3vw,46px);padding-right:clamp(20px,3vw,46px)}}
+@media(max-width:1120px){.hero{grid-template-columns:minmax(0,1fr) minmax(215px,.72fr);min-height:393px;gap:14px}.hero h1{font-size:clamp(36px,4.2vw,53px)}.diagram-svg{max-height:270px}.diagram-bottom{font-size:8px}.hero p{font-size:13px}.world-card h3{font-size:17px}}
+@media(max-width:950px){.hero{grid-template-columns:1fr;min-height:unset;padding:36px 34px}.hero-body{max-width:710px}.hero h1{font-size:clamp(42px,7.5vw,74px)}.field-diagram{display:none}.hero-footnote{margin-top:27px}.sidebar{flex-basis:220px}}
+@media(max-width:760px){.sidebar{background:var(--field-paper)}.sidebar-scrim{background:#07120bba}.topbar{padding:0 18px}.main-view{padding:24px 17px 65px}.hero{padding:30px 25px}.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi{padding:17px}.world-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.hero h1{font-size:clamp(40px,9vw,66px)}.sidebar{flex-basis:252px}}
+@media(max-width:520px){.hero{padding:27px 21px}.hero h1{font-size:clamp(34px,11vw,48px)}.hero-edition{display:none}.hero p{font-size:12px}.hero-footnote{font-size:8px;gap:6px}.hero-footnote i{width:13px}.hero-actions button{width:100%;justify-content:space-between}.kpi{gap:7px;padding:14px}.kpi strong{font-size:25px}.kpi span:last-child{font-size:9px}.world-grid{grid-template-columns:1fr}.world-card{min-height:237px}.world-big-icon{margin:11px 0 2px}.section-heading h2{font-size:24px}.continue-panel{padding:16px;gap:11px}.continue-mark{width:48px;height:50px;flex-basis:48px;font-size:22px}.continue-copy h3{font-size:18px}.continue-action{gap:5px}.continue-action>span:first-child{display:none}.prompt-panel,.review-panel{padding:17px}.world-hero{padding:21px}.lesson-section{padding:19px}.victory-modal{padding:27px 20px}}
+@media(prefers-reduced-motion:reduce){.world-card:hover,.resource-item:hover,.btn-primary:hover:not(:disabled){transform:none!important}html{scroll-behavior:auto}}
+
+/* Print-like folio numbers complete the route-atlas language. */
+.brand-glyph{font:950 12px/1 Consolas,"Courier New",monospace;letter-spacing:-.14em;transform:rotate(6deg)}
+.world-card:before{content:attr(data-world);position:absolute;right:15px;top:42px;font:950 86px/.9 "Arial Narrow",Arial,sans-serif;letter-spacing:-.1em;color:#f0b28d;opacity:.085;pointer-events:none}
