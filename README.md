@@ -6,7 +6,7 @@ A small learning game for Git, containers, Kubernetes and cloud fundamentals.
 
 Built with React, TypeScript and Vite. Play it in the browser or run it locally. The lessons are short enough to finish one at a time.
 
-**8 worlds · 40 missions · 120 questions · 120 flashcards · 40 simulated command labs · 8 bosses · 8 badges**
+**8 worlds · 40 missions · 120 mission questions · 120 flashcards · 40 command checkpoints · 8 runbooks · 8 diagnostic drills**
 
 [Get started](#-quick-start) · [Explore the curriculum](docs/CURRICULUM.md) · [Real-world labs](labs/README.md) · [Architecture](docs/ARCHITECTURE.md)
 
@@ -23,7 +23,7 @@ I wanted a way to practice Git and infrastructure concepts without jumping betwe
 | System | How it works |
 | --- | --- |
 | Campaign map | 8 themed worlds, 5 missions each, sequential unlocks |
-| Lessons | A brief, 3 key concepts, a real command example, safe-use tips, and official sources |
+| Lessons | Three core concepts, command examples, on-call notes, verification steps, common failure modes, and references |
 | Interactive command challenge | Text-based validation of one targeted command; **does not execute a shell** |
 | Knowledge checkpoints | 3 questions per level; pass 2/3 to unlock mission completion |
 | Flashcard vault | 120 term/definition cards, reveal/retry, scheduled spaced review |
@@ -35,7 +35,7 @@ I wanted a way to practice Git and infrastructure concepts without jumping betwe
 | Victory celebrations | Mission clear dialogs, boss-chest rewards, progress previews, and responsive celebrations |
 | Offline progress | Browser `localStorage`, JSON export/import, reset; no server telemetry |
 | Portfolio & CI | React + TypeScript + Vite, content checks, Docker, Compose, GitHub Actions, GitHub Pages |
-| Practical labs | Optional local Git/Docker/Kubernetes and architecture challenge workbooks in `labs/` |
+| Practical labs | Optional local Git/Docker/Kubernetes and architecture challenge workbooks in `labs/` |\n| Operator runbooks | Eight interactive investigations, 32 steps, 24 diagnostics, and eight decision questions in the Field manual |
 
 > **IMPORTANT:** Ops Atlas's in-game terminal is a *simulation*. It only compares the text of a command against the mission answer (ignoring whitespace differences). It does not execute Docker commands, provision cloud resources, or verify changes to an external system. This is intentionally safe, not a replacement for a real terminal or disposable cloud lab.
 
