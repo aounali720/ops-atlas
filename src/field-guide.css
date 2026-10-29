@@ -338,3 +338,48 @@ button{transition:background-color .17s,border-color .17s,color .17s,transform .
 /* Print-like folio numbers complete the route-atlas language. */
 .brand-glyph{font:950 12px/1 Consolas,"Courier New",monospace;letter-spacing:-.14em;transform:rotate(6deg)}
 .world-card:before{content:attr(data-world);position:absolute;right:15px;top:42px;font:950 86px/.9 "Arial Narrow",Arial,sans-serif;letter-spacing:-.1em;color:#f0b28d;opacity:.085;pointer-events:none}
+
+
+/* Mission notes: three checks before touching a real system. */
+.operator-notes-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-top:20px}
+.operator-notes-grid>div{border:1px solid var(--field-line);background:var(--field-raised);border-radius:5px;padding:19px 17px 17px}
+.operator-notes-grid .micro-label{color:var(--field-ochre);font:700 10px/1.4 Consolas,monospace;letter-spacing:.1em}
+.operator-notes-grid h3{font-size:18px;margin:11px 0 9px;color:var(--field-text)}
+.operator-notes-grid p{font-size:13px;line-height:1.65;color:var(--field-muted);margin:0}
+.playbooks{margin:24px 0 42px}
+.playbooks>.section-heading{margin-bottom:18px}
+.playbooks>.section-heading p{color:var(--field-muted);max-width:680px;margin:9px 0 0;font-size:14px}
+.playbook-tabs{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 14px}
+.playbook-tabs button{background:var(--field-raised);border:1px solid var(--field-line);color:var(--field-muted);border-radius:3px;padding:10px 13px;font-weight:700;font-size:11px;cursor:pointer}
+.playbook-tabs button:hover,.playbook-tabs button.selected{background:var(--field-paper);color:#1a2b24;border-color:var(--field-paper)}
+.playbook-panel{background:var(--field-surface);border:1px solid var(--field-line);border-radius:5px;overflow:hidden}
+.playbook-heading{padding:25px 27px;border-bottom:1px solid var(--field-line);background:linear-gradient(105deg,#27372f,var(--field-surface))}
+.playbook-heading .micro-label{color:var(--field-ochre);font:700 10px/1.3 Consolas,monospace;letter-spacing:.13em}
+.playbook-heading h3{font-size:clamp(23px,3.5vw,35px);margin:9px 0 8px;color:var(--field-text)}
+.playbook-heading p{font-size:14px;max-width:850px;color:var(--field-muted);margin:0}
+.playbook-section-heading{display:flex;align-items:center;gap:9px;color:var(--field-ochre);font:700 11px/1.4 Consolas,monospace;letter-spacing:.09em;margin:26px 27px 14px}
+.playbook-steps{padding:0 27px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.playbook-step{display:flex;gap:12px;background:#121d19;border:1px solid var(--field-line);border-radius:4px;padding:17px 15px}
+.playbook-step-num{font:800 19px/1.2 Consolas,monospace;color:var(--field-orange)}
+.playbook-step h4,.playbook-signal h4{margin:0 0 10px;font-size:15px;color:var(--field-text)}
+.playbook-step code{display:block;white-space:pre-wrap;overflow-wrap:anywhere;background:#26332c;border-left:2px solid var(--field-orange);color:#e6e1cf;padding:8px 10px;font-size:11px;line-height:1.55;border-radius:2px}
+.playbook-step p,.playbook-signal p{margin:10px 0 0;color:var(--field-muted);font-size:12px;line-height:1.58}
+.playbook-signals{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:0 27px}
+.playbook-signal{padding:15px 16px;border-top:2px solid #82634a;background:var(--field-raised)}
+.playbook-signal p strong{color:var(--field-text)}
+.playbook-question{margin:26px 27px 0;padding:16px 19px 20px;border:1px solid #72604a;background:#2a2922;border-radius:4px}
+.playbook-question .playbook-section-heading{margin:0 0 13px}
+.playbook-question>h4{font-size:18px;line-height:1.5;color:var(--field-text);margin:0 0 15px}
+.playbook-options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.playbook-options button{background:#1d2824;border:1px solid #455449;color:#e7e5d8;border-radius:3px;padding:12px;display:flex;align-items:start;gap:9px;text-align:left;line-height:1.4;font-size:12px;cursor:pointer}
+.playbook-options button>span{color:var(--field-ochre);font-weight:800}
+.playbook-options button:hover:enabled{border-color:var(--field-ochre)}
+.playbook-options button.correct{border-color:#84b99d;background:#1b3b2e}
+.playbook-options button.wrong{border-color:#d48779;background:#462d2d}
+.playbook-options button:disabled{cursor:default}
+.playbook-feedback{margin-top:13px;color:#e9e4ce;font-size:13px;line-height:1.6}
+.playbook-feedback strong{color:var(--field-ochre)}
+.playbook-sources{display:flex;align-items:center;flex-wrap:wrap;gap:11px;margin:22px 27px 26px;padding-top:17px;border-top:1px solid var(--field-line);font-size:12px;color:var(--field-muted)}
+.playbook-sources a{display:flex;align-items:center;gap:4px;color:var(--field-green);text-decoration:underline;text-underline-offset:3px}
+@media(max-width:1080px){.operator-notes-grid,.playbook-signals{grid-template-columns:1fr}}
+@media(max-width:760px){.playbook-heading{padding:20px}.playbook-steps{grid-template-columns:1fr;padding:0 17px}.playbook-signals{margin:0 17px}.playbook-section-heading{margin-left:17px;margin-right:17px}.playbook-question{margin:22px 17px 0}.playbook-options{grid-template-columns:1fr}.playbook-sources{margin:20px 17px}.operator-notes-grid{gap:9px}}
