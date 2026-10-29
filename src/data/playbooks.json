@@ -1,0 +1,482 @@
+[
+  {
+    "id": "git",
+    "title": "Recover a damaged working branch",
+    "kicker": "Git / change control",
+    "situation": "A feature branch has two accidental commits, a teammate has already pulled it, and you need to back out the change without destroying shared history.",
+    "steps": [
+      {
+        "label": "Establish the state",
+        "command": "git status --short && git log --oneline --graph --decorate -12",
+        "reason": "Determine whether local edits are uncommitted and whether the commits have been shared."
+      },
+      {
+        "label": "Read the exact patch",
+        "command": "git show --stat <commit> && git show <commit>",
+        "reason": "Understand which paths and behavior will change before reversing a commit."
+      },
+      {
+        "label": "Revert a shared change",
+        "command": "git revert <commit>",
+        "reason": "Create a new compensating commit so existing clones and pull-request links remain valid."
+      },
+      {
+        "label": "Validate and publish",
+        "command": "git diff HEAD~1..HEAD && git status --short",
+        "reason": "Run the project tests before pushing; the revert must remove the faulty behavior without reverting unrelated work."
+      }
+    ],
+    "signals": [
+      {
+        "symptom": "Uncommitted changes block the revert",
+        "inspect": "git status --short",
+        "next": "Commit or safely stash the unrelated changes, then retry on a clean tree."
+      },
+      {
+        "symptom": "Revert conflicts with later edits",
+        "inspect": "git status and git diff --check",
+        "next": "Resolve with intent, test, stage the resolved paths, then continue the revert."
+      },
+      {
+        "symptom": "A secret was exposed in a commit",
+        "inspect": "Identify affected key and scope",
+        "next": "Revoke and rotate it immediately; history editing alone does not make a leaked secret safe."
+      }
+    ],
+    "question": {
+      "prompt": "The bad commit is already on a branch used by other developers. What is generally the safest first fix?",
+      "options": [
+        "Force-push an older commit",
+        "Use git revert to create a new correction",
+        "Delete the .git directory",
+        "Reset every teammate's branch"
+      ],
+      "correct": 1,
+      "why": "Revert preserves shared ancestry and records a traceable corrective change."
+    },
+    "sources": [
+      "https://git-scm.com/docs/git-revert",
+      "https://git-scm.com/book/en/v2/Git-Tools-Reset-Demystified"
+    ]
+  },
+  {
+    "id": "github",
+    "title": "Investigate a failing pull-request check",
+    "kicker": "GitHub / CI",
+    "situation": "A pull request works on a laptop but fails in CI. The same branch also modifies a GitHub Actions workflow.",
+    "steps": [
+      {
+        "label": "Read the failed job, not just the badge",
+        "command": "gh run view --log-failed",
+        "reason": "Identify whether the failure is a test assertion, missing dependency, denied permission or infrastructure outage."
+      },
+      {
+        "label": "Compare the runner and local environment",
+        "command": "node --version && npm --version",
+        "reason": "Check runtime versions, install flags and environment differences; local caches may hide missing dependencies."
+      },
+      {
+        "label": "Trace changes to the workflow",
+        "command": "git diff origin/main...HEAD -- .github/workflows",
+        "reason": "Treat a workflow edit as code that can alter permissions, execution context and secret handling."
+      },
+      {
+        "label": "Rerun only after addressing the cause",
+        "command": "npm ci && npm test",
+        "reason": "Verify a reproducible install from the lockfile. Require review before elevating workflow token permissions."
+      }
+    ],
+    "signals": [
+      {
+        "symptom": "Works locally, fails on clean runner",
+        "inspect": "Lockfile, case-sensitive paths, pinned runtimes",
+        "next": "Reproduce on a clean checkout; remove assumptions about local state."
+      },
+      {
+        "symptom": "403 or permission denied",
+        "inspect": "Workflow permissions and repository settings",
+        "next": "Grant only the precise permission needed to the specific job, not blanket write access."
+      },
+      {
+        "symptom": "Untrusted PR modifies pipeline",
+        "inspect": "Event trigger and secrets availability",
+        "next": "Separate privileged publishing from untrusted code; use protected environments and review."
+      }
+    ],
+    "question": {
+      "prompt": "A workflow triggered by a pull request needs to publish a release. Which approach best protects credentials?",
+      "options": [
+        "Give all jobs write permissions",
+        "Print secrets for debugging",
+        "Keep PR tests read-only; publish only from a trusted, approved context",
+        "Skip tests for external contributors"
+      ],
+      "correct": 2,
+      "why": "Untrusted change execution should not inherit credentials capable of changing releases or cloud infrastructure."
+    },
+    "sources": [
+      "https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions",
+      "https://docs.github.com/en/actions/monitoring-and-troubleshooting-workflows"
+    ]
+  },
+  {
+    "id": "docker",
+    "title": "Find out why a container cannot be reached",
+    "kicker": "Docker / networking",
+    "situation": "The service starts successfully inside a container, but a browser on your host cannot connect to localhost:8080.",
+    "steps": [
+      {
+        "label": "Confirm the container is running",
+        "command": "docker ps -a",
+        "reason": "An exited container is a process failure, not a firewall or DNS issue."
+      },
+      {
+        "label": "Inspect the application log",
+        "command": "docker logs --tail 100 <container>",
+        "reason": "Look for listen address, runtime exceptions, configuration errors and startup completion."
+      },
+      {
+        "label": "Check the port binding",
+        "command": "docker port <container>",
+        "reason": "The host port must be published to the correct container port; EXPOSE alone is metadata."
+      },
+      {
+        "label": "Check the listen address",
+        "command": "docker exec <container> ss -lnt",
+        "reason": "Inside the container the app normally must bind 0.0.0.0, while the host can publish only to 127.0.0.1 for local use."
+      }
+    ],
+    "signals": [
+      {
+        "symptom": "Connection refused on host",
+        "inspect": "Published ports and container listener",
+        "next": "Correct mapping and service listen address, then recreate the container."
+      },
+      {
+        "symptom": "Works on host but exposed on LAN",
+        "inspect": "docker port and host firewall",
+        "next": "Restrict host publishing to loopback or an explicit trusted interface."
+      },
+      {
+        "symptom": "Application data disappears after recreation",
+        "inspect": "Mounts and volume definitions",
+        "next": "Use a named volume for durable data, and test backup/restore."
+      }
+    ],
+    "question": {
+      "prompt": "The Dockerfile says EXPOSE 3000. What else is needed to visit the app from the host?",
+      "options": [
+        "EXPOSE is enough",
+        "Publish the container port and ensure the app listens on the container interface",
+        "Run everything with --privileged",
+        "Delete Docker networks"
+      ],
+      "correct": 1,
+      "why": "EXPOSE documents a port; docker run -p or equivalent Compose ports publishes it."
+    },
+    "sources": [
+      "https://docs.docker.com/engine/network/",
+      "https://docs.docker.com/get-started/docker-concepts/running-containers/publishing-ports/"
+    ]
+  },
+  {
+    "id": "engineering",
+    "title": "Rescue a broken Compose deployment",
+    "kicker": "Containers / delivery",
+    "situation": "A web container starts before its database is ready. Repeated restarts hide the actual error, and a developer suggests adding a ten-second sleep.",
+    "steps": [
+      {
+        "label": "Validate the Compose model",
+        "command": "docker compose config",
+        "reason": "Resolve variables, service names, volumes and network definitions before launching anything."
+      },
+      {
+        "label": "Inspect service health and exit codes",
+        "command": "docker compose ps -a",
+        "reason": "Distinguish a process crash from an unavailable dependency."
+      },
+      {
+        "label": "Compare service logs",
+        "command": "docker compose logs --tail 100 web db",
+        "reason": "Correlate startup timestamps with authentication, DNS, migration and database readiness errors."
+      },
+      {
+        "label": "Use readiness checks and bounded retries",
+        "command": "docker compose up --build",
+        "reason": "Provide a meaningful database healthcheck and application reconnect logic instead of a fixed sleep."
+      }
+    ],
+    "signals": [
+      {
+        "symptom": "Web exits with connection refused",
+        "inspect": "Database health, service name and port",
+        "next": "Verify DNS and credentials; wait for actual readiness and implement retry/backoff."
+      },
+      {
+        "symptom": "Compose changed but service did not",
+        "inspect": "docker compose config and image build output",
+        "next": "Recreate with the intended config and check image tags and bind mounts."
+      },
+      {
+        "symptom": "Database empty after deploy",
+        "inspect": "Volumes and compose down options",
+        "next": "Restore from backup if necessary; avoid down -v when persistent data matters."
+      }
+    ],
+    "question": {
+      "prompt": "Why is depends_on alone often insufficient for a database-backed service?",
+      "options": [
+        "It disables networking",
+        "It guarantees transactions commit",
+        "It controls ordering but not full application readiness by default",
+        "It deletes volumes on restart"
+      ],
+      "correct": 2,
+      "why": "Startup order and readiness are different. Healthchecks and application retries close the gap."
+    },
+    "sources": [
+      "https://docs.docker.com/compose/how-tos/startup-order/",
+      "https://docs.docker.com/compose/how-tos/view-container-output/"
+    ]
+  },
+  {
+    "id": "kubernetes",
+    "title": "Diagnose an unavailable Kubernetes service",
+    "kicker": "Kubernetes / operations",
+    "situation": "A Deployment has three replicas, but the Service returns no responses after a rollout.",
+    "steps": [
+      {
+        "label": "Confirm which cluster is selected",
+        "command": "kubectl config current-context",
+        "reason": "Never start with destructive actions before confirming the target environment."
+      },
+      {
+        "label": "Compare desired and actual state",
+        "command": "kubectl get deploy,pods,svc -o wide",
+        "reason": "Spot missing Pods, crash loops, bad rollout status and Service mapping."
+      },
+      {
+        "label": "Inspect readiness and endpoints",
+        "command": "kubectl get endpointslices && kubectl describe service <name>",
+        "reason": "Service routing depends on matching labels and ready endpoints."
+      },
+      {
+        "label": "Read events and container logs",
+        "command": "kubectl describe pod <pod> && kubectl logs <pod> --previous",
+        "reason": "Events show scheduling or pull failures; previous logs explain crashes after restarts."
+      }
+    ],
+    "signals": [
+      {
+        "symptom": "Service resolves but has no endpoints",
+        "inspect": "Selector labels and Pod readiness",
+        "next": "Correct the selector or readiness probe, not the cluster DNS."
+      },
+      {
+        "symptom": "Pod Pending",
+        "inspect": "Pod events and requested CPU/memory/storage",
+        "next": "Check capacity, node selectors, taints and volume attachment."
+      },
+      {
+        "symptom": "CrashLoopBackOff",
+        "inspect": "Current and previous container logs",
+        "next": "Investigate failing startup, missing configuration and dependency reachability."
+      }
+    ],
+    "question": {
+      "prompt": "The Service exists but its EndpointSlices have no ready endpoints. Where should you look first?",
+      "options": [
+        "Service selectors and Pod readiness",
+        "Cloud provider invoice",
+        "Git commit author name",
+        "Ingress TLS expiry only"
+      ],
+      "correct": 0,
+      "why": "Without a ready matching backend, the Service cannot forward requests to the intended application."
+    },
+    "sources": [
+      "https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/",
+      "https://kubernetes.io/docs/tasks/debug/debug-application/debug-pods/"
+    ]
+  },
+  {
+    "id": "cloud",
+    "title": "Design a private cloud workload",
+    "kicker": "Cloud / architecture",
+    "situation": "A small API needs outgoing updates, a private database, backups and limited admin access. A proposed design places everything on the public internet.",
+    "steps": [
+      {
+        "label": "Draw the trust boundaries",
+        "command": "Client → public entry point → private application → private database",
+        "reason": "Separate public user traffic from management planes and backend data paths."
+      },
+      {
+        "label": "Choose least-privilege identity",
+        "command": "Assign service identity → narrowly scoped permissions",
+        "reason": "Applications should use short-lived workload identity where available, not long-lived keys in configuration files."
+      },
+      {
+        "label": "Check routes and firewall paths",
+        "command": "Review inbound, outbound, return path and DNS resolution",
+        "reason": "Only the intended entry point should be internet-facing; egress can use a controlled gateway where required."
+      },
+      {
+        "label": "Prove the recovery path",
+        "command": "Back up sample data → restore to isolated environment → verify",
+        "reason": "A successful backup job is not evidence that a workload meets recovery-time and data-loss targets."
+      }
+    ],
+    "signals": [
+      {
+        "symptom": "Database has a public IP",
+        "inspect": "Database exposure and firewall sources",
+        "next": "Remove public reachability unless explicitly required; isolate the backend in private networking."
+      },
+      {
+        "symptom": "Application cannot fetch updates",
+        "inspect": "DNS, default route and NAT/egress policy",
+        "next": "Add only the egress path that is needed, with logging and controls."
+      },
+      {
+        "symptom": "Recovery requires manual guesswork",
+        "inspect": "Backup inventory, roles, restore duration",
+        "next": "Document and time a restore drill against RTO and RPO."
+      }
+    ],
+    "question": {
+      "prompt": "A private VM needs outbound package updates but no direct inbound internet traffic. Which design fits?",
+      "options": [
+        "Open all inbound ports",
+        "Controlled outbound routing with tightly restricted inbound rules",
+        "Give the VM a public IP and administrator password",
+        "Disable logging"
+      ],
+      "correct": 1,
+      "why": "Outbound reachability can be provided without allowing unsolicited inbound connections."
+    },
+    "sources": [
+      "https://docs.aws.amazon.com/vpc/latest/userguide/what-is-amazon-vpc.html",
+      "https://cloud.google.com/architecture/framework/security"
+    ]
+  },
+  {
+    "id": "platform",
+    "title": "Review a risky infrastructure plan",
+    "kicker": "Infrastructure as code / operations",
+    "situation": "A Terraform plan shows a storage bucket replacement and deletion of an existing security group. The change was intended to update one tag.",
+    "steps": [
+      {
+        "label": "Confirm workspace and backend",
+        "command": "terraform workspace show",
+        "reason": "Wrong workspace or state backend can target resources belonging to another environment."
+      },
+      {
+        "label": "Validate the configuration",
+        "command": "terraform fmt -check && terraform validate",
+        "reason": "Catch syntax and schema issues before interpreting the plan."
+      },
+      {
+        "label": "Inspect changes and replacements",
+        "command": "terraform plan -out=tfplan && terraform show tfplan",
+        "reason": "Separate intended updates from destructive replacement actions; understand the provider's force-new attributes."
+      },
+      {
+        "label": "Require review and recovery",
+        "command": "Do not apply until every replacement is explained",
+        "reason": "For data-bearing resources, verify backup and migration plans. Never treat a plan as routine when it destroys state."
+      }
+    ],
+    "signals": [
+      {
+        "symptom": "Unexpected resource replacement",
+        "inspect": "Force-new attributes and provider changes",
+        "next": "Stop and compare desired configuration with current state and drift."
+      },
+      {
+        "symptom": "State lock conflict",
+        "inspect": "Whether a legitimate apply is running",
+        "next": "Coordinate with the state owner; avoid force-unlock without proving the lock is stale."
+      },
+      {
+        "symptom": "Infrastructure differs from code",
+        "inspect": "Plan drift and untracked manual edits",
+        "next": "Reconcile deliberately; do not blindly overwrite emergency changes."
+      }
+    ],
+    "question": {
+      "prompt": "An IaC plan unexpectedly replaces a production database. What should happen next?",
+      "options": [
+        "Apply because validation passed",
+        "Review the replacement cause and verified recovery plan before any apply",
+        "Delete the state file",
+        "Skip review by applying during low traffic"
+      ],
+      "correct": 1,
+      "why": "Validation checks configuration structure; it does not certify that the planned operational impact is acceptable."
+    },
+    "sources": [
+      "https://developer.hashicorp.com/terraform/cli/commands/plan",
+      "https://developer.hashicorp.com/terraform/language/state"
+    ]
+  },
+  {
+    "id": "security",
+    "title": "Contain a suspicious production release",
+    "kicker": "Production / security",
+    "situation": "A new image digest was deployed minutes before an unusual outbound connection and elevated error rate. The incident lead needs a decision that preserves evidence.",
+    "steps": [
+      {
+        "label": "Establish the timeline",
+        "command": "Record deploy SHA, image digest, alert timestamps and affected service",
+        "reason": "Build a shared event sequence before changing systems that may contain useful evidence."
+      },
+      {
+        "label": "Scope the exposure",
+        "command": "Review identity use, network egress and recent changes",
+        "reason": "Determine the affected workload, data path and possible credentials at risk."
+      },
+      {
+        "label": "Contain without erasing evidence",
+        "command": "Isolate suspicious workload or revoke scoped credentials",
+        "reason": "Use an approved response playbook; capture relevant logs and artifacts first when safe."
+      },
+      {
+        "label": "Restore a verified release",
+        "command": "Deploy a known-good pinned image digest and check rollback compatibility",
+        "reason": "Monitor SLOs and compare behavior; rollback does not undo database migrations or data exposure."
+      }
+    ],
+    "signals": [
+      {
+        "symptom": "Unknown outbound host after deploy",
+        "inspect": "Egress logs, process behavior and build provenance",
+        "next": "Restrict the suspicious route, preserve telemetry and investigate the artifact."
+      },
+      {
+        "symptom": "Rollback restores service but alerts persist",
+        "inspect": "Credential reuse and remaining compromised resources",
+        "next": "Rotate affected credentials and hunt for persistence rather than assuming release rollback resolved compromise."
+      },
+      {
+        "symptom": "Team cannot identify exact image version",
+        "inspect": "Deployment manifests, registry metadata and CI attestations",
+        "next": "Require immutable digests and record source-to-artifact relationships for future releases."
+      }
+    ],
+    "question": {
+      "prompt": "What is the strongest evidence that a running container came from an approved build?",
+      "options": [
+        "Its image tag says latest",
+        "The deployment and CI records match an immutable signed digest",
+        "The server is responding quickly",
+        "The image name contains secure"
+      ],
+      "correct": 1,
+      "why": "A trusted build-to-deployment chain binds an exact artifact digest to reviewed source and provenance."
+    },
+    "sources": [
+      "https://docs.github.com/en/actions/security-for-github-actions",
+      "https://slsa.dev/spec/v1.0/"
+    ]
+  }
+]
