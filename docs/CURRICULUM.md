@@ -1,6 +1,6 @@
 # Curriculum: 8 worlds, 40 missions
 
-The learning sequence is designed for newcomers who want to progress to practical cloud engineering. Each mission includes a brief, **three concepts**, a concrete command example, a **text-only** terminal checkpoint, **three scored questions**, three review flashcards, and a link to primary documentation. Every fifth mission is a world boss.
+The learning sequence is designed for newcomers who want to progress to practical cloud engineering. Each mission includes a briefing, **three concepts**, a command example, on-call notes covering verification and failure modes, a **text-only** terminal checkpoint, **three scored questions**, three review flashcards, and a link to primary documentation. Every fifth mission is a world boss.
 
 ## Learning model
 
@@ -124,6 +124,23 @@ The learning sequence is designed for newcomers who want to progress to practica
 | 40 👑 | **Final boss: ship safely** | Defense in depth, Immutable deployment, Disaster recovery test |
 
 **Primary references:** [Source 1](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure) · [Source 2](https://docs.docker.com/security/) · [Source 3](https://docs.github.com/en/actions/security-for-github-actions)
+
+## Field manual: investigation runbooks
+
+The Field manual includes eight selectable runbooks, one per world. Each presents a failed or high-risk situation, four investigation steps, three symptom-to-action paths, and a self-check question that explains the decision. These are simulated exercises; commands are examples for authorized, disposable environments only.
+
+| Runbook | Decision to practice |
+| --- | --- |
+| Git: recover a damaged branch | Revert a shared mistake without rewriting collaborators' history |
+| GitHub: investigate a failed check | Trace CI failures and protect workflow credentials |
+| Docker: unreachable container | Distinguish port publishing, binding and runtime faults |
+| Container engineering: broken Compose deployment | Separate ordering, health and dependency failures |
+| Kubernetes: unavailable service | Trace selectors, readiness, EndpointSlices and Pod events |
+| Cloud: private workload | Design private backend networking and tested recovery |
+| Platform: risky IaC plan | Detect destructive changes before applying infrastructure |
+| Production: suspicious release | Preserve evidence, contain exposure and restore a pinned build |
+
+In addition, all **40 missions** have dedicated notes explaining how the system works, what to verify and which common failure to avoid.
 
 ## Assessment and progression
 
