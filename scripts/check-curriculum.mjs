@@ -31,4 +31,25 @@ for (const [index, lesson] of data.lessons.entries()) {
   assert(lesson.sources.every(s=>s.startsWith('https://')));
   assert.equal(lesson.xp, lesson.isBoss ? 180 : 100);
 }
+
+const fieldNotes = JSON.parse(readFileSync(new URL('../src/data/field-notes.json', import.meta.url), 'utf8'));
+const playbooks = JSON.parse(readFileSync(new URL('../src/data/playbooks.json', import.meta.url), 'utf8'));
+assert.deepEqual(Object.keys(fieldNotes).sort(), data.lessons.map(l => l.id).sort(), 'Each mission must have one field note');
+for (const [id, note] of Object.entries(fieldNotes)) {
+  for (const key of ['mentalModel','verify','watch']) assert(typeof note[key]==='string' && note[key].length>55, id+': missing '+key);
+}
+assert.deepEqual(playbooks.map(p=>p.id),data.worlds.map(w=>w.id),'Runbooks must follow the campaign worlds');
+for (const guide of playbooks) {
+  assert(guide.title.length>10 && guide.situation.length>60);
+  assert.equal(guide.steps.length,4);
+  assert.equal(guide.signals.length,3);
+  assert.equal(guide.question.options.length,4);
+  assert.equal(new Set(guide.question.options).size,4);
+  assert(Number.isInteger(guide.question.correct) && guide.question.correct>=0 && guide.question.correct<4);
+  assert(guide.question.why.length>25);
+  for(const item of guide.steps) assert(item.label.length>5 && item.command.length>10 && item.reason.length>40);
+  for(const item of guide.signals) assert(item.symptom.length>8 && item.inspect.length>10 && item.next.length>25);
+  assert(guide.sources.every(url=>url.startsWith('https://')));
+}
+console.log('VALIDATED: 40 mission field notes, 8 runbooks, 32 investigation steps, 24 diagnostics, 8 decision questions.');
 console.log(`VALIDATED: ${data.worlds.length} worlds, ${data.lessons.length} missions, ${data.lessons.length*3} MCQs, ${data.lessons.length*3} flashcards, ${data.lessons.length} command labs, ${data.worlds.length} boss missions.`);
