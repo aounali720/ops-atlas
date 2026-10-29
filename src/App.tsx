@@ -8,6 +8,11 @@ import {
   Upload, X, Zap, Gift, Coins, CalendarDays, Crown, Star, type LucideIcon,
 } from 'lucide-react';
 import type { Lesson, Progress, QuizQuestion, Screen, World } from './data/types';
+import fieldNoteData from './data/field-notes.json';
+import playbookData from './data/playbooks.json';
+
+const fieldNotes = fieldNoteData as Record<string,{mentalModel:string;verify:string;watch:string}>;
+const playbooks = playbookData;
 import { curriculum, lessons, worlds, achievementStats, buildExam, completionRate, dueCards,
   emptyProgress, labAccepts, missionUnlocked, nextLesson, playerLevel, PROGRESS_KEY,
   questionsFor, readProgress, sanitizeProgress, totalXP, updateReview } from './lib/game';
@@ -83,7 +88,7 @@ function App() {
   };
   const saveProgress=()=>{
     const b=new Blob([JSON.stringify({app:'Ops Atlas',...progress,exportedAt:new Date().toISOString()},null,2)],{type:'application/json'});
-    const url=URL.createObjectURL(b),a=document.createElement('a');a.href=url;a.download='stackbound-progress.json';a.click();URL.revokeObjectURL(url);
+    const url=URL.createObjectURL(b),a=document.createElement('a');a.href=url;a.download='ops-atlas-progress.json';a.click();URL.revokeObjectURL(url);
     setNotice('Progress file exported to your downloads.');
   };
   const importProgress=async(e:ChangeEvent<HTMLInputElement>)=>{
@@ -105,8 +110,8 @@ function App() {
     {menuOpen&&<button className="sidebar-scrim" aria-label="Close navigation" onClick={()=>setMenuOpen(false)}/>}
     <aside className={`sidebar ${menuOpen?'mobile-open':''}`}>
       <button className="brand" onClick={()=>setView('dashboard')} aria-label="Ops Atlas home">
-        <span className="brand-emblem" aria-hidden="true"><span className="brand-glyph">S/B</span></span>
-        <span><b>STACK<span>BOUND</span></b><small>FIELD MANUAL / VOL. 01</small></span>
+        <span className="brand-emblem" aria-hidden="true"><span className="brand-glyph">OA</span></span>
+        <span><b>OPS<span> ATLAS</span></b><small>FIELD MANUAL / VOL. 01</small></span>
       </button>
       <div className="sidebar-heading">01 / THE WORKBENCH</div>
       <nav aria-label="Main navigation" className="nav-list">
@@ -258,6 +263,13 @@ function LessonView({lesson,p,onBack,onLab,onQuiz,onComplete,onBookmark}: {lesso
         <div className="code-reference"><div className="code-header"><div className="traffic-dots"><i/><i/><i/></div><span><Terminal size={14}/> COMMAND EXAMPLE</span><button title="Copy example" onClick={()=>navigator.clipboard?.writeText(lesson.example)}><Copy size={15}/> Copy</button></div><pre><code>{lesson.example}</code></pre></div>
         <div className="warning-box"><Lightbulb size={19}/><span><strong>Operator note:</strong> {lesson.tip}</span></div>
       </section>
+      {fieldNotes[lesson.id]&&<section className="lesson-section operator-notes"><h2><span className="section-step">02B</span> On-call notes</h2><p>Use these checks when the syntax is right but the system still behaves unexpectedly.</p>
+        <div className="operator-notes-grid">
+          <div><span className="micro-label">UNDERSTAND</span><h3>How it works</h3><p>{fieldNotes[lesson.id].mentalModel}</p></div>
+          <div><span className="micro-label">VERIFY</span><h3>Evidence to collect</h3><p>{fieldNotes[lesson.id].verify}</p></div>
+          <div><span className="micro-label">AVOID</span><h3>Common failure</h3><p>{fieldNotes[lesson.id].watch}</p></div>
+        </div>
+      </section>}
       <section className="lesson-section"><h2><span className="section-step">03</span> Terminal challenge {solved&&<span className="status-check"><CheckCircle2 size={18}/> COMPLETE</span>}</h2><p>Enter the command to solve this mission. This is a text-only simulator — it never executes commands, connects to Docker, or accesses cloud credentials.</p><TerminalChallenge key={lesson.id} lesson={lesson} solved={solved} onSolve={onLab}/></section>
       <section className="lesson-section"><h2><span className="section-step">04</span> Knowledge check {passed&&<span className="status-check"><CheckCircle2 size={18}/> PASSED</span>}</h2><p>Three questions. Get at least two right to clear the checkpoint. Each answer comes with an explanation.</p><KnowledgeCheck key={lesson.id} lesson={lesson} passed={passed} onPass={onQuiz}/></section>
       <section className="lesson-section finish-section"><div><span className="eyebrow">MISSION DEBRIEF</span><h2>{done?'Mission already cleared':solved&&passed?'Ready to claim your XP?':'Two objectives to complete'}</h2><p>{done?'Revisiting this mission is free. You earned XP only once.':'Clear the terminal challenge and pass the knowledge check to continue.'}</p><div className="finish-checks"><span className={solved?'done':''}>{solved?<CheckCircle2 size={17}/>:<LockKeyhole size={17}/>} Terminal challenge</span><span className={passed?'done':''}>{passed?<CheckCircle2 size={17}/>:<LockKeyhole size={17}/>} Knowledge check</span></div></div><button className="btn-primary" disabled={!solved||!passed} onClick={onComplete}>{done?'Continue':'Complete mission'}<ArrowRight size={18}/></button></section>
@@ -271,7 +283,7 @@ function TerminalChallenge({lesson,solved,onSolve}:{lesson:Lesson,solved:boolean
   const attempt=()=>{if(!input.trim()||solved)return;
     const ok=labAccepts(lesson.lab.answer,input);
     setHistory(h=>[...h,{command:input,ok}].slice(-5));setInput('');if(ok)onSolve();};
-  return <div className="terminal-window"><div className="terminal-top"><div className="traffic-dots"><i/><i/><i/></div><span>academy@stackbound:~$</span><span className="terminal-safe"><ShieldCheck size={13}/> SIMULATED</span></div>
+  return <div className="terminal-window"><div className="terminal-top"><div className="traffic-dots"><i/><i/><i/></div><span>operator@ops-atlas:~$</span><span className="terminal-safe"><ShieldCheck size={13}/> SIMULATED</span></div>
     <div className="terminal-screen"><div className="terminal-greeting">Ops Atlas training shell v1.0<br/>No commands are executed. Practice syntax safely.</div><div className="terminal-task"><span>➜ OBJECTIVE:</span> {lesson.lab.prompt}</div>
       {history.map((h,i)=><div key={i} className="terminal-entry"><div><span className="terminal-dollar">$</span> {h.command}</div><div className={h.ok?'terminal-success':'terminal-fail'}>{h.ok?'✓ Command accepted. Challenge complete!':'✕ Not quite. Check the command and try again.'}</div></div>)}
       {solved&&history.length===0&&<div className="terminal-success">✓ Challenge cleared. Nicely done.</div>}
@@ -420,12 +432,33 @@ const resources=[
   {subject:'Google Cloud',title:'Google Cloud Overview',url:'https://docs.cloud.google.com/docs/overview',description:'Regions/zones, Compute Engine, IAM, storage, and networking.'},
   {subject:'IaC',title:'Terraform Documentation',url:'https://developer.hashicorp.com/terraform/docs',description:'Versioned infrastructure, remote state, plan, and apply workflow.'},
 ];
+
+function PlaybookLibrary(){
+  const [active,setActive]=useState(playbooks[0].id);
+  const [selected,setSelected]=useState<number|null>(null);
+  const guide=playbooks.find(g=>g.id===active)??playbooks[0];
+  return <section className="playbooks">
+    <div className="section-heading"><div><div className="eyebrow">PRACTICAL DECISION MAKING</div><h2>Operator runbooks</h2><p>Eight incident-style exercises. Follow the evidence trail, then decide on the safest next action.</p></div></div>
+    <div className="playbook-tabs" role="tablist" aria-label="Runbook subject">{playbooks.map(g=><button role="tab" aria-selected={guide.id===g.id} key={g.id} className={guide.id===g.id?'selected':''} onClick={()=>{setActive(g.id);setSelected(null)}}>{worlds.find(w=>w.id===g.id)?.title??g.id}</button>)}</div>
+    <div className="playbook-panel">
+      <div className="playbook-heading"><span className="micro-label">{guide.kicker.toUpperCase()}</span><h3>{guide.title}</h3><p>{guide.situation}</p></div>
+      <div className="playbook-section-heading"><Terminal size={18}/> INVESTIGATION SEQUENCE</div>
+      <div className="playbook-steps">{guide.steps.map((step,i)=><div className="playbook-step" key={step.label}><span className="playbook-step-num">{String(i+1).padStart(2,'0')}</span><div><h4>{step.label}</h4><code>{step.command}</code><p>{step.reason}</p></div></div>)}</div>
+      <div className="playbook-section-heading"><Activity size={18}/> SYMPTOM → INSPECTION → NEXT MOVE</div>
+      <div className="playbook-signals">{guide.signals.map(signal=><div className="playbook-signal" key={signal.symptom}><h4>{signal.symptom}</h4><p><strong>Inspect:</strong> {signal.inspect}</p><p><strong>Next:</strong> {signal.next}</p></div>)}</div>
+      <div className="playbook-question"><div className="playbook-section-heading"><BrainCircuit size={18}/> YOUR CALL</div><h4>{guide.question.prompt}</h4><div className="playbook-options">{guide.question.options.map((option,i)=><button key={i} disabled={selected!==null} className={selected!==null&&i===guide.question.correct?'correct':selected===i?'wrong':''} onClick={()=>setSelected(i)}><span>{String.fromCharCode(65+i)}</span>{option}</button>)}</div>{selected!==null&&<div role="status" className="playbook-feedback"><strong>{selected===guide.question.correct?'Good call.':'Review the decision.'}</strong> {guide.question.why}</div>}</div>
+      <div className="playbook-sources"><span>Further reading:</span>{guide.sources.map((url,i)=><a key={url} href={url} target="_blank" rel="noreferrer">Official reference {i+1} <ExternalLink size={13}/></a>)}</div>
+    </div>
+  </section>
+}
+
 function ResourcesView({p,onExport,onImport,onReset}:{p:Progress,onExport:()=>void,onImport:()=>void,onReset:()=>void}){
   const [query,setQuery]=useState('');const filtered=resources.filter(r=>(r.subject+' '+r.title+' '+r.description).toLowerCase().includes(query.toLowerCase()));
   return <><PageIntro eyebrow="THE FIELD MANUAL" title="Learn from the source" description="Curated primary documentation to take every simulated mission further into real, authorized hands-on practice. All learning content in the game is original."/>
     <div className="search-control"><Search size={18}/><input aria-label="Search resources" value={query} onChange={e=>setQuery(e.target.value)} placeholder="Search documentation…"/></div>
     <div className="resources-grid">{filtered.map(r=><a href={r.url} key={r.url} target="_blank" rel="noreferrer" className="resource-item"><div className="resource-top"><span className="micro-label">{r.subject.toUpperCase()}</span><ExternalLink size={17}/></div><h3>{r.title}</h3><p>{r.description}</p><span className="resource-visit">Visit official resource <ArrowRight size={15}/></span></a>)}</div>
     {filtered.length===0&&<p className="muted">No matching resources found.</p>}
+    <PlaybookLibrary/>
     <div className="section-heading"><div><div className="eyebrow">HOW TO USE THE ACADEMY</div><h2>From simulation to real projects</h2></div></div>
     <div className="guide-grid"><div><span className="guide-num">01</span><h3>Understand</h3><p>Read the briefing, focus on the three core terms, and check the example command before the lab.</p></div><div><span className="guide-num">02</span><h3>Practice safely</h3><p>Type commands into the simulated terminal. It checks text only; no processes or cloud API requests are executed.</p></div><div><span className="guide-num">03</span><h3>Build for real</h3><p>Repeat validated steps in disposable local folders and isolated test clusters. Never use production credentials for training.</p></div><div><span className="guide-num">04</span><h3>Prove and review</h3><p>Pass quizzes, schedule flashcards, and apply the same concepts to your own projects and CI/CD pipelines.</p></div></div>
     <div className="cloud-warning"><ShieldCheck size={22}/><p><strong>Cloud cost and safety notice.</strong> This website creates no cloud resources and asks for no credentials. Real AWS, Azure, or Google Cloud exercises may create billable resources. Configure budgets, avoid root credentials, restrict access, and clean up test infrastructure after use.</p></div>
