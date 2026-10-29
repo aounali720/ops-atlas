@@ -1,0 +1,202 @@
+{
+  "git-1": {
+    "mentalModel": "A commit identifies a tree snapshot and one or more parent commits. Branch names are movable pointers; they are not separate copies of a project.",
+    "verify": "Compare git status with git log --oneline -5. Untracked files will not appear in earlier commits until staged and recorded.",
+    "watch": "Git history is not a secret vault. Credentials committed once may remain recoverable even after a later deletion."
+  },
+  "git-2": {
+    "mentalModel": "git init creates repository metadata at .git; it does not publish anything remotely. A nested repository can cause confusing ownership of files.",
+    "verify": "Run git rev-parse --show-toplevel to identify the actual repository root, then git status --short to inspect the working tree.",
+    "watch": "Do not initialize inside an existing checkout accidentally. Locate the parent .git directory before proceeding."
+  },
+  "git-3": {
+    "mentalModel": "The index is the proposed next snapshot. git add selects content; git commit records the staged tree and its parent.",
+    "verify": "Run git diff before staging and git diff --cached afterward to review precisely what will be committed.",
+    "watch": "git add . can include local config or generated files. Use .gitignore and inspect the staged diff before every commit."
+  },
+  "git-4": {
+    "mentalModel": "git diff compares working tree to index by default; git diff --cached compares index to HEAD. git log shows ancestry, not file contents alone.",
+    "verify": "Use git log --oneline --graph --decorate -10 and git show --stat HEAD to connect a change to its commit.",
+    "watch": "A clean working tree does not imply a good build. File integrity, tests, and review remain separate checks."
+  },
+  "git-5": {
+    "mentalModel": "A merge preserves both lines of ancestry; rebase replays commits to build a different history. Revert adds a compensating commit.",
+    "verify": "For a shared branch, use git revert <commit> and inspect the diff. Practice merge conflicts in a throwaway repository.",
+    "watch": "Avoid force-pushing a shared branch to erase errors. Rewritten commit IDs can break other clones, reviews, and signed history."
+  },
+  "github-1": {
+    "mentalModel": "Fetch downloads remote refs without changing your checked-out work; pull combines fetch with integration. Push shares reachable local commits.",
+    "verify": "Run git remote -v and git branch -vv; verify which remote and upstream branch are configured.",
+    "watch": "Never assume origin points to the intended organization. Verify before pushing confidential or unfinished work."
+  },
+  "github-2": {
+    "mentalModel": "A pull request compares a head branch with a base branch. Reviewers evaluate both the code change and the test evidence.",
+    "verify": "Inspect the Files changed tab and required checks; verify the destination base branch before requesting approval.",
+    "watch": "Passing CI cannot prove the design is safe. Check permissions, data flow, rollout, and rollback."
+  },
+  "github-3": {
+    "mentalModel": "A fork is a repository copy used for independent development; upstream conventionally names the original project remote.",
+    "verify": "Verify git remote -v, fetch upstream, and compare the branches before opening a PR.",
+    "watch": "Avoid pushing unrelated local branches or credentials to a public fork."
+  },
+  "github-4": {
+    "mentalModel": "Conflicts arise when Git cannot reconcile competing edits automatically. Markers show alternatives, not the final answer.",
+    "verify": "After editing the conflicted files, run git diff --check and the project tests, then stage the resolution.",
+    "watch": "Removing conflict markers is not sufficient. The combined program still needs semantic review."
+  },
+  "github-5": {
+    "mentalModel": "A workflow reacts to events; jobs use isolated runners by default. Tokens and secrets should be scoped to the least privilege needed.",
+    "verify": "Inspect the workflow permissions, event triggers and dependency pinning; check the Actions run log for the failing step.",
+    "watch": "Pull-request code is untrusted. Avoid exposing elevated secrets or write permissions to unreviewed changes."
+  },
+  "docker-1": {
+    "mentalModel": "An image is an immutable filesystem/config template; a container is a runtime instance with a writable layer.",
+    "verify": "Compare docker image ls with docker ps -a and inspect a chosen container's image reference.",
+    "watch": "Deleting a container may discard data held only in its writable layer. Use explicit volumes for persistence."
+  },
+  "docker-2": {
+    "mentalModel": "Port publishing maps a host socket to a container socket. The image may declare EXPOSE without actually publishing a host port.",
+    "verify": "Run docker port <container> and docker inspect <container> to confirm the listener and published address.",
+    "watch": "Binding to 0.0.0.0 can expose services beyond localhost. Use 127.0.0.1:hostport:containerport for private practice."
+  },
+  "docker-3": {
+    "mentalModel": "Stop requests graceful shutdown before termination; remove deletes the container but not its named volume by default.",
+    "verify": "Review docker ps -a, docker logs --tail 50 <container> and docker inspect before deleting anything.",
+    "watch": "docker exec only works for running containers. Prefer logs and inspect when diagnosing startup failures."
+  },
+  "docker-4": {
+    "mentalModel": "Named volumes outlive a container. Bind mounts reference host paths and inherit host filesystem permission considerations.",
+    "verify": "Use docker volume inspect and a disposable data file to confirm persistence after recreating a container.",
+    "watch": "docker compose down -v intentionally deletes managed volumes; do not use it casually on data you need."
+  },
+  "docker-5": {
+    "mentalModel": "User-defined bridge networks provide container-name DNS resolution; published host ports are not required for inter-container traffic.",
+    "verify": "Inspect docker network inspect <network> and test service-to-service communication by service name.",
+    "watch": "localhost inside a container means that container, not the host or another service."
+  },
+  "engineering-1": {
+    "mentalModel": "A Dockerfile describes image construction. FROM chooses a base, COPY adds files, and CMD defines the default process.",
+    "verify": "Run docker build -t example:dev . and inspect the resulting image before launching a disposable container.",
+    "watch": "Use a minimal build context and avoid embedding keys, tokens, or .env files in the image layers."
+  },
+  "engineering-2": {
+    "mentalModel": "Docker build cache reuses layers when relevant inputs and instructions are unchanged. Ordering stable steps early saves rebuild time.",
+    "verify": "Compare build logs after editing source files versus dependency manifests to see which layer invalidates.",
+    "watch": "A copied secret can survive in an image layer even if deleted in a later instruction."
+  },
+  "engineering-3": {
+    "mentalModel": "Compose defines a multi-service application. depends_on controls start order but does not by itself guarantee application readiness.",
+    "verify": "Use docker compose config to validate the merged model, then docker compose ps to check service state.",
+    "watch": "Use a healthcheck or application retry logic before assuming the database or upstream service is ready."
+  },
+  "engineering-4": {
+    "mentalModel": "Multi-stage builds separate compilers and build tools from runtime artifacts. Digests identify exact image content.",
+    "verify": "Inspect the runtime image's filesystem and user ID; pin critical base images appropriately.",
+    "watch": "Small images can still contain exploitable packages. Rebuild, scan, patch, and test regularly."
+  },
+  "engineering-5": {
+    "mentalModel": "A liveness probe answers whether a process should be restarted; readiness answers whether it should receive traffic.",
+    "verify": "Inspect application logs, health status, and resource use separately to distinguish crashes from overload.",
+    "watch": "A healthcheck that only confirms the process exists can miss broken dependencies or degraded service."
+  },
+  "kubernetes-1": {
+    "mentalModel": "The control plane holds desired state and schedules work; kubelet and the container runtime execute workloads on nodes.",
+    "verify": "Use kubectl cluster-info, kubectl get nodes -o wide and kubectl get namespaces for an initial cluster check.",
+    "watch": "A context may point at production. Run kubectl config current-context before writing or deleting resources."
+  },
+  "kubernetes-2": {
+    "mentalModel": "A Deployment manages ReplicaSets, which manage Pods. Pods are disposable; stable state belongs outside the Pod filesystem.",
+    "verify": "Use kubectl get deploy,rs,pods and kubectl describe deploy <name> to connect desired and observed state.",
+    "watch": "Editing a live Pod is not a durable deployment change. Update the controller's declarative spec."
+  },
+  "kubernetes-3": {
+    "mentalModel": "ClusterIP gives an in-cluster virtual IP; Ingress needs a compatible controller. Service selectors connect clients to Pod endpoints.",
+    "verify": "Check kubectl get svc,endpointslices and verify labels on the intended Pods.",
+    "watch": "A Service with no ready endpoints cannot reach your application even if its DNS name resolves."
+  },
+  "kubernetes-4": {
+    "mentalModel": "ConfigMaps are for non-sensitive configuration. Kubernetes Secrets are base64-encoded API objects, not encrypted merely by encoding.",
+    "verify": "Inspect references and RBAC, and enable encryption at rest plus restricted access where appropriate.",
+    "watch": "Do not commit real secret YAML to Git. Prefer external secret delivery and rotation mechanisms."
+  },
+  "kubernetes-5": {
+    "mentalModel": "Requests influence scheduling; limits constrain consumption. HPA scales based on configured signals and available metrics.",
+    "verify": "Check kubectl describe pod, kubectl top pods and kubectl get events --sort-by=.lastTimestamp.",
+    "watch": "CrashLoopBackOff, ImagePullBackOff and Pending need different investigations. Read Pod events before restarting."
+  },
+  "cloud-1": {
+    "mentalModel": "Shared responsibility varies by service model: providers secure the underlying service, customers still configure identity, data, and access.",
+    "verify": "List who controls OS patching, workload code, IAM and encryption for the specific managed service.",
+    "watch": "Moving to managed cloud services does not transfer responsibility for excessive permissions or public data."
+  },
+  "cloud-2": {
+    "mentalModel": "VMs provide OS-level control; managed containers abstract host maintenance; functions suit event-driven, short-lived tasks.",
+    "verify": "Compare workload duration, state, networking, scaling, pricing and patch ownership before choosing.",
+    "watch": "A low idle price does not guarantee a low bill under high request volume, network egress or persistent storage."
+  },
+  "cloud-3": {
+    "mentalModel": "Object storage works with keys and objects, block storage with attachable disks, and file storage with shared file semantics.",
+    "verify": "Confirm persistence, latency, access controls, backup and recovery behavior for each storage choice.",
+    "watch": "Buckets and shares are not automatically private because application code references them indirectly."
+  },
+  "cloud-4": {
+    "mentalModel": "Network routes decide reachability; security groups/firewall policies decide allowed traffic. Public subnets require an actual internet route.",
+    "verify": "Draw the packet path: source, route table, firewall rules, target listener, and return path.",
+    "watch": "An open firewall rule is dangerous even if today nothing is listening. Use specific source ranges."
+  },
+  "cloud-5": {
+    "mentalModel": "RPO measures acceptable data loss; RTO measures acceptable time to restore service. Multi-zone design improves availability, not necessarily recoverability.",
+    "verify": "Run a timed restore test with sample data and verify that recovered data meets business expectations.",
+    "watch": "Backups that have never been restored are unproven. Protect backup access and deletion separately."
+  },
+  "platform-1": {
+    "mentalModel": "EC2 provides compute, S3 object storage and IAM access policy. An instance role is safer than long-lived embedded access keys.",
+    "verify": "Inspect trust relationships, policy scopes and resource-level conditions before granting application access.",
+    "watch": "A successful IAM simulator result is not a substitute for testing effective access with the actual principal."
+  },
+  "platform-2": {
+    "mentalModel": "Across providers, map the same need to equivalent services while checking differences in policy semantics and networking.",
+    "verify": "Compare VPC/VNet subnets, managed identities, object-store policies and audit logging in an architecture table.",
+    "watch": "Service-name equivalence does not mean permission defaults or security boundaries are identical."
+  },
+  "platform-3": {
+    "mentalModel": "Terraform plan previews an intended change; state maps configuration to tracked resources. State is sensitive infrastructure metadata.",
+    "verify": "Run fmt, validate and plan in a non-production workspace; inspect replacements and destroys before apply.",
+    "watch": "Do not store state publicly. Use encrypted remote state, locking where supported, and restrictive access."
+  },
+  "platform-4": {
+    "mentalModel": "CI validates changes; CD promotes tested artifacts. Build once, record a digest, and promote that exact artifact between stages.",
+    "verify": "Follow the artifact from commit SHA to build job, registry digest and deployment manifest.",
+    "watch": "Rebuilding from the same tag can produce different bits. Prefer immutable image digests."
+  },
+  "platform-5": {
+    "mentalModel": "An SLI is a measured behavior; an SLO sets its target. Error budgets help decide whether to ship or stabilize.",
+    "verify": "Compare service error rate and latency against an agreed window, then inspect correlated deploys and logs.",
+    "watch": "Dashboards without actionable alerts, owners and runbooks rarely shorten incidents."
+  },
+  "security-1": {
+    "mentalModel": "Rootless containers reduce risk but do not replace kernel isolation. Drop capabilities and restrict filesystem writes where possible.",
+    "verify": "Inspect the image USER, container capabilities, mounts and host-network settings before approving a workload.",
+    "watch": "Privileged containers and host mounts expand the blast radius; require explicit justification."
+  },
+  "security-2": {
+    "mentalModel": "An SBOM inventories components; vulnerability scans identify known issues; signatures help verify origin and integrity.",
+    "verify": "Associate the SBOM, scan report and image digest with the same released build.",
+    "watch": "A clean scan is time-bound and incomplete. Update vulnerability data and reassess as new advisories appear."
+  },
+  "security-3": {
+    "mentalModel": "OIDC creates short-lived workload identity through a trust policy. Workflow token permissions should default to read-only.",
+    "verify": "Check trigger context, audience and subject restrictions before granting cloud federation.",
+    "watch": "Never let unreviewed workflow code assume a broad cloud role solely because it runs on your repository."
+  },
+  "security-4": {
+    "mentalModel": "Incident response starts with containment, evidence capture and impact assessment, not deleting every unhealthy container.",
+    "verify": "Build a timeline from deployment SHA, alerts, logs and change events; rehearse the rollback decision.",
+    "watch": "A rollback fixes the symptom only if the old artifact and relevant data migrations remain compatible."
+  },
+  "security-5": {
+    "mentalModel": "A secure release connects reviewed source, verified CI, a pinned artifact, least-privilege deployment and tested recovery.",
+    "verify": "Trace one release through commit, checks, artifact digest, deployment approval, observability and restoration.",
+    "watch": "The best playbook states who can stop a rollout and what signal triggers an immediate rollback."
+  }
+}
